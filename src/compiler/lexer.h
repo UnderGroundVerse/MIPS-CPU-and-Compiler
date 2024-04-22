@@ -17,8 +17,12 @@ private:
     bool retreat();
     bool isChar(char);
     bool isNum(char);
+    bool isQuotation(char);
+    bool isSpecialChar(char);
+    std::string buildString();
+    std::string buildNumber();
     std::string buildStringLiteral();
-    std::string buildNumberLiteral();
+    bool categorizeString(std::string, TokenType*, SubType*)
 
 public:
     Lexer(const char*, int);

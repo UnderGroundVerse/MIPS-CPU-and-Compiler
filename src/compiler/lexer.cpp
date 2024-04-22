@@ -7,14 +7,20 @@
 int Lexer::analizeFile(std::vector<Token> out){
 
     do{
+        std::string resultString;
+        if(isQuotation(currentChar)){
+            std::string resultString = buildStringLiteral();
+            std::cout << resultString << std::endl;
+        }
         if(isChar(currentChar)){
-            std::string stringLiteral = buildStringLiteral();
-            std::cout << stringLiteral << std::endl;
+            std::string resultString = buildString();
+            std::cout << resultString << std::endl;
         }
         else if (isNum(currentChar)){
-            std::string numberLiteral = buildNumberLiteral();
-            std::cout << numberLiteral << std::endl;
+            std::string resultString = buildNumber();
+            std::cout << resultString << std::endl;
         }
+        
     }while (advance());
 }
 
@@ -40,7 +46,6 @@ bool Lexer::retreat(){
 }
 
 
-
 bool Lexer::isChar(char c){
     for(int i = 0; i < CharLiterals.length(); i ++){
         if(c == CharLiterals[i])
@@ -57,8 +62,23 @@ bool Lexer::isNum(char c){
     return false;
 }
 
+bool Lexer::isQuotation(char c){
+    if((int)c == (int)"'" || (int)c == (int)'"'){
+        return true;
+    }
+    return false;
+}
 
-std::string Lexer::buildStringLiteral(){
+bool Lexer::isSpecialChar(char c){
+    for(int i = 0; i < SpecialChars.length(); i ++ ){
+        if(c == SpecialChars[i])
+            return true;
+    }
+    return false;
+}
+
+
+std::string Lexer::buildString(){
     std::string result = "";
     do{
         result += currentChar;
@@ -67,13 +87,31 @@ std::string Lexer::buildStringLiteral(){
     return result;
 }
 
-std::string Lexer::buildNumberLiteral(){
+std::string Lexer::buildNumber(){
     std::string result = "";
     do{
         result += currentChar;
     }while(advance() && isNum(currentChar));
     retreat();
     return result;
+}
+
+std::string Lexer::buildStringLiteral(){
+    char qoutation = currentChar;
+    advance();
+    std::string result = "";
+    do{
+        result += currentChar;
+    }while(advance() && (isChar(currentChar) || isNum(currentChar)) || isSpecialChar(currentChar));
+    
+    if(currentChar == qoutation){
+        return qoutation + result + qoutation;
+    }
+    return "";
+}
+
+bool Lexer::categorizeString(std::string input, TokenType* tokenType, SubType* SubType){
+    
 }
 
 Lexer::Lexer(const char* file, int fileSize){
