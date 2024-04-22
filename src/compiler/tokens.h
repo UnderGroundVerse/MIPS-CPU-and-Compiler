@@ -64,6 +64,10 @@ enum SubType{
 };
 
 
+const std::string NumLiterals = "0123456789";
+const std::string CharLiterals = "abcdefghijklmnopqrstuvwxyz";
+
+
 
 const std::map<SubType, std::string> SubTypeMap = 
 {

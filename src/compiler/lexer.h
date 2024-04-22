@@ -14,6 +14,11 @@ private:
     char currentChar;
     int currentPosition;
     bool advance();
+    bool retreat();
+    bool isChar(char);
+    bool isNum(char);
+    std::string buildStringLiteral();
+    std::string buildNumberLiteral();
 
 public:
     Lexer(const char*, int);
