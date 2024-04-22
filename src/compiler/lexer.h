@@ -1,16 +1,18 @@
 #include <string>
 #include <vector>
-#include "token.h"
+#include "tokens.h"
 
 
 
 class Lexer{
-    private:
-        char currentChar;
-        std::string currentWord;
-        int advance();
+private:
+    const char* file;
+    char currentChar;
+    int currentPosition;
+    void advance();
 
-    public:
-        int analizeFile(FILE file, std::vector<Token> *out);
+public:
+    Lexer(const char*);
+    int analizeFile(std::vector<Token>);
 
 };
