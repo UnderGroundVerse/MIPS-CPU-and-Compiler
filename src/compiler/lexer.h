@@ -22,7 +22,7 @@ private:
     std::string buildString();
     std::string buildNumber();
     std::string buildStringLiteral();
-    bool categorizeString(std::string, TokenType*, SubType*)
+    bool categorizeString(std::string, TokenType*, SubType*);
 
 public:
     Lexer(const char*, int);
