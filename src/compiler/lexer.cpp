@@ -1,3 +1,6 @@
+#ifndef LEXER_CPP
+#define LEXER_CPP
+
 #include "lexer.h"
 #include <iostream>
 
@@ -22,4 +25,8 @@ Lexer::Lexer(const char* file){
     currentChar = file[currentPosition];
 }
 
+
+
+
+#endif
 

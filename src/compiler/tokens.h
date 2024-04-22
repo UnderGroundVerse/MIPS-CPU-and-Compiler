@@ -1,3 +1,6 @@
+#ifndef TOKENS_H
+#define TOKENS_H
+
 
 #include <string>
 #include <map>
@@ -62,7 +65,7 @@ enum SubType{
 
 
 
-std::map<SubType, std::string> SubTypeMap = 
+const std::map<SubType, std::string> SubTypeMap = 
 {
     {BREAK, "break"},
     {ELSE, "else"},
@@ -74,7 +77,7 @@ std::map<SubType, std::string> SubTypeMap =
     {IF, "if"},
     {WHILE, "while"},
     {FOR, "for"},
-    
+
     {WHITE_SPACE, " "},
     {SEMICOLON, ";"},
     {CURLY_BRACKETS_LEFT, "}"},
@@ -117,5 +120,5 @@ struct Token
 
 
 
-
+#endif
 

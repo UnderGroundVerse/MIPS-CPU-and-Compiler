@@ -1,3 +1,6 @@
+#ifndef LEXER_H
+#define LEXER_H
+
 #include <string>
 #include <vector>
 #include "tokens.h"
@@ -16,3 +19,6 @@ public:
     int analizeFile(std::vector<Token>);
 
 };
+
+
+#endif

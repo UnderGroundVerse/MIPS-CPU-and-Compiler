@@ -1,13 +1,19 @@
 #include "lexer.h"
 #include <fstream>
-#include <streambuf>
 #include <iostream>
 
 
 int main(){
+    char c;
+    std::vector<char> content;
     std::ifstream file("test.c");
-    std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    if(file.is_open()){
+        while(file.get(c)){
+            content.push_back(c);
+        }
+    }
     std::vector<Token> temp;
-    Lexer lexer(contents.c_str());
+    Lexer lexer(content.data());
     lexer.analizeFile(temp);
+    return 1;
 }
