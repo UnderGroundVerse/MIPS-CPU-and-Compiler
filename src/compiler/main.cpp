@@ -13,7 +13,7 @@ int main(){
         }
     }
     std::vector<Token> temp;
-    Lexer lexer(content.data());
+    Lexer lexer(content.data(), content.size());
     lexer.analizeFile(temp);
     return 1;
 }

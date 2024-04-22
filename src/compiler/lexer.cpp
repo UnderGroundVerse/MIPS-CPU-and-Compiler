@@ -6,23 +6,27 @@
 
 int Lexer::analizeFile(std::vector<Token> out){
 
-    while(currentChar != EOF){
+    do{
         std::cout << currentChar << std::endl;
-        advance();
+    }while (advance());
+}
+
+bool Lexer::advance(){
+    if(currentPosition < fileSize)
+    {
+        currentPosition++;
+        currentChar = file[currentPosition];
     }
-
+    else
+        return false;
+    return true;
 }
 
-void Lexer::advance(){
-    currentPosition++;
-    currentChar = file[currentPosition];
-
-}
-
-Lexer::Lexer(const char* file){
+Lexer::Lexer(const char* file, int fileSize){
     this->file = file;
-    currentPosition = 0;
-    currentChar = file[currentPosition];
+    this->fileSize = fileSize;
+    this->currentPosition = 0;
+    this->currentChar = file[currentPosition];
 }
 
 
