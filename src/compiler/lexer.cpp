@@ -3,6 +3,12 @@
 
 #include "lexer.h"
 #include <iostream>
+#include <regex>
+
+
+#define STRING_LITERAL_REGEX    "^(\"|\')(\w*\d*)(\"|\')$"
+#define VARIABLE_REGEX          "^([A-Z]|[a-z])+(_*|[0-9]|[A-Z]|[a-z])*$"
+#define NUM_LITERAL_REGEX       "^[0-9]+(\.*)*[0-9]*$"
 
 int Lexer::analizeFile(std::vector<Token> out){
 
@@ -110,8 +116,22 @@ std::string Lexer::buildStringLiteral(){
     return "";
 }
 
-bool Lexer::categorizeString(std::string input, TokenType* tokenType, SubType* SubType){
-    
+bool Lexer::categorizeString(std::string input, TokenType* tokenType, SubType* subType){
+    if(std::regex_match(input, std::regex(STRING_LITERAL_REGEX))){
+        *tokenType = LITERAL;
+        *subType = STRING_LITERAL;
+    }
+    else if(std::regex_match(input, std::regex(VARIABLE_REGEX))){
+        *tokenType = IDENTIFIER;
+        *subType = VARIABLE;
+    }
+    else if(std::regex_match(input, std::regex(NUM_LITERAL_REGEX))){
+        *tokenType = LITERAL;
+        *subType = NUMBER_LITERAL;
+    }
+    else{
+        
+    }
 }
 
 Lexer::Lexer(const char* file, int fileSize){
