@@ -12,8 +12,10 @@
 
 int Lexer::analizeFile(std::vector<Token> out){
 
+    std::vector<Token> tokens;
+
     do{
-        std::string resultString;
+        std::string resultString = ""+currentChar;
         if(isQuotation(currentChar)){
             std::string resultString = buildStringLiteral();
             std::cout << resultString << std::endl;
@@ -26,6 +28,8 @@ int Lexer::analizeFile(std::vector<Token> out){
             std::string resultString = buildNumber();
             std::cout << resultString << std::endl;
         }
+
+        tokens.push_back(buildToken(resultString));
         
     }while (advance());
 }
@@ -69,7 +73,7 @@ bool Lexer::isNum(char c){
 }
 
 bool Lexer::isQuotation(char c){
-    if((int)c == (int)"'" || (int)c == (int)'"'){
+    if(c == '\'' || c == '"'){
         return true;
     }
     return false;
@@ -116,7 +120,7 @@ std::string Lexer::buildStringLiteral(){
     return "";
 }
 
-bool Lexer::categorizeString(std::string input, TokenType* tokenType, SubType* subType){
+bool Lexer::categorizeString(std::string input, TokenType* tokenType, TokenSubType* subType){
     if(std::regex_match(input, std::regex(STRING_LITERAL_REGEX))){
         *tokenType = LITERAL;
         *subType = STRING_LITERAL;
@@ -130,8 +134,29 @@ bool Lexer::categorizeString(std::string input, TokenType* tokenType, SubType* s
         *subType = NUMBER_LITERAL;
     }
     else{
-        
+        *subType = StringSubTypeMap[input];
+        for(TokenSubType sub : KeywordTokenSubTypes){
+            if(sub == *subType)
+                *tokenType = IDENTIFIER;
+        }
+        for(TokenSubType sub : SeparatorTokenSubTypes){
+            if(sub == *subType){
+                *tokenType = SEPARATOR;
+            }
+        }
+        for(TokenSubType sub : OperatorTokenSubTypes){
+            if(sub == *subType){
+                *tokenType == OPERATOR;
+            }
+        }
     }
+}
+
+Token Lexer::buildToken(std::string input){
+    TokenType tokenType;
+    TokenSubType subType;
+    categorizeString(input, &tokenType, &subType);
+    return Token(tokenType, subType, input);
 }
 
 Lexer::Lexer(const char* file, int fileSize){
