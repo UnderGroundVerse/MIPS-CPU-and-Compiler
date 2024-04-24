@@ -7,14 +7,17 @@
 
 
 enum TokenType{
+    TOKEN_TYPE_NULL,
     IDENTIFIER,
     KEYWORD,
     SEPARATOR,
     OPERATOR,
-    LITERAL
+    LITERAL,
 };
 
 enum TokenSubType{
+    TOKEN_SUB_TYPE_NULL,
+
     // identifier tokens
     VARIABLE,
 
@@ -62,6 +65,7 @@ enum TokenSubType{
     NUMBER_LITERAL,
     STRING_LITERAL,
     CHAR_LITERAL
+
 };
 
 

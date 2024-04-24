@@ -27,7 +27,7 @@ private:
 
 public:
     Lexer(const char*, int);
-    int analizeFile(std::vector<Token>);
+    std::vector<Token> analizeFile(std::vector<Token>);
 
 };
 

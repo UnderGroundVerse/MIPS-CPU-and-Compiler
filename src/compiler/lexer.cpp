@@ -10,28 +10,29 @@
 #define VARIABLE_REGEX          "^([A-Z]|[a-z])+(_*|[0-9]|[A-Z]|[a-z])*$"
 #define NUM_LITERAL_REGEX       "^[0-9]+(\.*)*[0-9]*$"
 
-int Lexer::analizeFile(std::vector<Token> out){
+std::vector<Token> Lexer::analizeFile(std::vector<Token> out){
 
     std::vector<Token> tokens;
 
     do{
-        std::string resultString = ""+currentChar;
+        if(currentChar == '\n')
+            continue;
+        std::string resultString(1, currentChar);
         if(isQuotation(currentChar)){
-            std::string resultString = buildStringLiteral();
-            std::cout << resultString << std::endl;
+            resultString = buildStringLiteral();
         }
-        if(isChar(currentChar)){
-            std::string resultString = buildString();
-            std::cout << resultString << std::endl;
+        else if(isChar(currentChar)){
+            resultString = buildString();
         }
         else if (isNum(currentChar)){
-            std::string resultString = buildNumber();
-            std::cout << resultString << std::endl;
+            resultString = buildNumber();
         }
-
+      
         tokens.push_back(buildToken(resultString));
         
     }while (advance());
+
+    return tokens;
 }
 
 bool Lexer::advance(){
@@ -146,15 +147,15 @@ bool Lexer::categorizeString(std::string input, TokenType* tokenType, TokenSubTy
         }
         for(TokenSubType sub : OperatorTokenSubTypes){
             if(sub == *subType){
-                *tokenType == OPERATOR;
+                *tokenType = OPERATOR;
             }
         }
     }
 }
 
 Token Lexer::buildToken(std::string input){
-    TokenType tokenType;
-    TokenSubType subType;
+    TokenType tokenType = TOKEN_TYPE_NULL;
+    TokenSubType subType = TOKEN_SUB_TYPE_NULL;
     categorizeString(input, &tokenType, &subType);
     return Token(tokenType, subType, input);
 }
