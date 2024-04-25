@@ -5,7 +5,16 @@
 
 class Parser{
     private:
-        
+        std::vector<Token> tokens;
+        Token currentToken;
+        int position;
+
+        ASTNode buildIfCondition();
+        ASTNode buildStatement();
+        ASTNode buildWhileLoop();
+        ASTNode buildForLoop();
+
     public:
-        ASTNode parseTokens(std::vector<Token> tokens);
-}
+        Parser(std::vector<Token> tokens);
+        ASTNode parseTokens();
+};
