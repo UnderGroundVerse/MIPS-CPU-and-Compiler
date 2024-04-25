@@ -1,4 +1,8 @@
+#ifndef AST_H
+#define AST_H
 
+
+#include <vector>
 
 
 enum NodeType{
@@ -58,4 +62,20 @@ NodeData StatementData[] = {
     OPERATOR
 };
 
+
+struct ASTNode{
+    NodeType nodeType;
+    NodeSubType nodeSubType;
+    NodeData nodeData;
+    std::vector<ASTNode> childNodes;
+
+    ASTNode(NodeType nodeType, NodeSubType nodeSubType, NodeData nodeData){
+        this->nodeType = nodeType;
+        this->nodeSubType = nodeSubType;
+        this->nodeData = nodeData;
+    }
+};
+
+
+#endif
 
