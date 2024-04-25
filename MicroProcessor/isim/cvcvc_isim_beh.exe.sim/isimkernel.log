@@ -1,0 +1,29 @@
+Command line:
+   cvcvc_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  50272
+
+Thu Apr 25 13:57:24 2024
+
+
+ Elaboration Time: 0.03125 sec
+
+ Current Memory Usage: 5151.09 Meg
+
+ Total Signals          : 9
+ Total Nets             : 19
+ Total Signal Drivers   : 5
+ Total Blocks           : 3
+ Total Primitive Blocks : 2
+ Total Processes        : 3
+ Total Traceable Variables  : 10
+ Total Scalar Nets and Variables : 381
+Total Line Count : 25
+
+ Total Simulation Time: 0.15625 sec
+
+ Current Memory Usage: 4993.8 Meg
+
+Thu Apr 25 13:59:02 2024
+
