@@ -1,11 +1,20 @@
 #include "lexer.h"
 #include <fstream>
 #include <iostream>
+#include <regex>
+
+
+#define FILE_NAME_REGEX "(.+)\.mips"
 
 
 int main(int argc, char *argv[]){
-    if(argc <= 1){
-        std::cout << "No arguments is Provided\n\t./mips [Name of File.mips]." << std::endl;
+    if(argc != 2){
+        std::cout << "Undefined Arguments:\n\t./mips [Name-of-File.mips]." << std::endl;
+        return -1;
+    }
+
+    if(!std::regex_match(argv[1], std::regex(FILE_NAME_REGEX))){
+        std::cout << "File Type is Not Supported:\n\t./mips [Name-of-File.mips]" << std::endl;
         return -1;
     }
 

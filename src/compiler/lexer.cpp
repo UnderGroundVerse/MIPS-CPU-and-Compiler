@@ -6,7 +6,7 @@
 #include <regex>
 
 
-#define STRING_LITERAL_REGEX    "^(\"|\')(\w*\d*)(\"|\')$"
+#define STRING_LITERAL_REGEX    "^(\"|\')(\\w*\\d*)(\"|\')$"
 #define VARIABLE_REGEX          "^([A-Z]|[a-z])+(_*|[0-9]|[A-Z]|[a-z])*$"
 #define NUM_LITERAL_REGEX       "^[0-9]+(\.*)*[0-9]*$"
 
@@ -122,6 +122,7 @@ std::string Lexer::buildStringLiteral(){
 }
 
 bool Lexer::categorizeString(std::string input, TokenType* tokenType, TokenSubType* subType){
+
     if(std::regex_match(input, std::regex(STRING_LITERAL_REGEX))){
         *tokenType = LITERAL;
         *subType = STRING_LITERAL;
