@@ -73,6 +73,7 @@ enum TokenSubType{
 const std::string NumLiterals = "0123456789";
 const std::string CharLiterals = "abcdefghijklmnopqrstuvwxyz";
 const std::string SpecialChars = ",.;{}()[] !@#$%^&*_-=<>/|";
+const std::string operators = "=!\\|<>-*&^%/";
 
 
 

@@ -27,6 +27,9 @@ std::vector<Token> Lexer::analizeFile(std::vector<Token> out){
         else if (isNum(currentChar)){
             resultString = buildNumber();
         }
+        else if(isOperator(currentChar)){
+            resultString = buildOperator();
+        }
       
         tokens.push_back(buildToken(resultString));
         
@@ -88,6 +91,14 @@ bool Lexer::isSpecialChar(char c){
     return false;
 }
 
+bool Lexer::isOperator(char c){
+    for(int i = 0; i < operators.length(); i ++ ){
+        if(c == operators[i])
+            return true;
+    }
+    return false;
+}
+
 
 std::string Lexer::buildString(){
     std::string result = "";
@@ -119,6 +130,14 @@ std::string Lexer::buildStringLiteral(){
         return qoutation + result + qoutation;
     }
     return "";
+}
+
+std::string Lexer::buildOperator(){
+    std::string result = "";
+    do{
+        result += currentChar;
+    }while(advance() && (isOperator(currentChar)));
+    return result;
 }
 
 bool Lexer::categorizeString(std::string input, TokenType* tokenType, TokenSubType* subType){
