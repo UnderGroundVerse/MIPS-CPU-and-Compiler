@@ -6,6 +6,7 @@ std::map<std::string, TokenSubType> StringSubTypeMap =
 {
     {"break", BREAK},
     {"else", ELSE},
+    {"elseif", ELSEIF},
     {"long", LONG},
     {"int", INT},
     {"char", CHAR},

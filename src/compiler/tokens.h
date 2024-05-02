@@ -24,6 +24,7 @@ enum TokenSubType{
     // keyword tokens
     BREAK,
     ELSE,
+    ELSEIF,
     LONG,
     INT,
     CHAR,
@@ -82,6 +83,7 @@ const TokenSubType KeywordTokenSubTypes[] =
 {   
     BREAK, 
     ELSE, 
+    ELSEIF,
     LONG, 
     INT, 
     CHAR, 

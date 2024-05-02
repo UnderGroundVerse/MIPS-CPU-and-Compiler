@@ -9,10 +9,15 @@ class Parser{
         Token currentToken;
         int position;
 
+        bool advance();
+
+        std::vector<ASTNode> captureNodes(TokenSubType);
+
         ASTNode buildIfCondition();
         ASTNode buildStatement();
         ASTNode buildWhileLoop();
         ASTNode buildForLoop();
+        std::vector<Token> getTokens(TokenSubType);
 
     public:
         Parser(std::vector<Token> tokens);
