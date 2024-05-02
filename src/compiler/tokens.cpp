@@ -23,8 +23,8 @@ std::map<std::string, TokenSubType> StringSubTypeMap =
     {"{", CURLY_BRACKETS_RIGHT},
     {"]", SQUARE_BRACKETS_LEFT},
     {"[", SQUARE_BRACKETS_RIGHT},
-    {"]", ROUND_BRACKETS_LEFT},
-    {"[", ROUND_BRACKETS_RIGHT},
+    {")", ROUND_BRACKETS_LEFT},
+    {"(", ROUND_BRACKETS_RIGHT},
 
     {"+", ADDITTION},
     {"-", SUBSTRACTION},

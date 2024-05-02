@@ -1,5 +1,8 @@
-#include "AST.h"
+#ifndef PARSER_H
+#define PARSER_H
+
 #include "tokens.h"
+#include "AST.h"
 
 
 
@@ -20,6 +23,9 @@ class Parser{
         std::vector<Token> getTokens(TokenSubType);
 
     public:
-        Parser(std::vector<Token> tokens);
+        Parser(std::vector<Token>);
         ASTNode parseTokens();
 };
+
+
+#endif

@@ -1,4 +1,7 @@
+
+
 #include "parser.h"
+#include <iostream>
 
 
 
@@ -43,14 +46,18 @@ ASTNode Parser::buildIfCondition(){
 
     std::vector<Token> conditionTokens;
 
+    std::cout << "IN" << std::endl;
+
     if(currentToken.subType == IF){
         nodeSubType = IF_CONDITION;
         advance();
         conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
     } else if( currentToken.subType == ELSEIF){
+        nodeSubType = ELSE_IF_CONDITION;
         advance();
         conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
     } else if(currentToken.subType == ELSE){
+        nodeSubType = ELSE_CONDITION;
         advance();
     }
 
@@ -80,6 +87,15 @@ std::vector<ASTNode> Parser::captureNodes(TokenSubType stopingSubtype){
         advance();
     }
     return nodes;
+}
+
+ASTNode Parser::parseTokens(){
+    std::vector<ASTNode> nodes;
+    if(currentToken.subType == CURLY_BRACKETS_RIGHT){
+        advance();
+        nodes = captureNodes(CURLY_BRACKETS_LEFT);
+    }
+    return ASTNode(MAIN, NODE_SUB_TYPE_NULL, std::vector<Token>(), nodes);
 }
 
 ASTNode Parser::buildWhileLoop(){

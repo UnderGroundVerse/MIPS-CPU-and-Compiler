@@ -133,6 +133,10 @@ struct Token
     TokenSubType subType;
     std::string data;
 
+    Token(){
+
+    }
+
     Token(TokenType tokenType, TokenSubType subType, std::string data)
     {
         this->tokenType = tokenType;

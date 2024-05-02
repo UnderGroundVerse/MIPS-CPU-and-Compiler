@@ -1,18 +1,7 @@
 
-
-
-node1: main -> node->  function call: funct;
-
-node2: funct ->
-
-
-
-
-mario = "mario";
-mario = mario + morcos;
-
-for(int i = 0; i < 0 ; i++)
-
-
-
-int i = 0;
+{
+    mario = 1 + 1;
+    if(mario == 2){
+        m = 1;
+    }
+}

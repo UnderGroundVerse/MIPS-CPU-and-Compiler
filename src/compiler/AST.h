@@ -9,6 +9,8 @@
 enum NodeType{
     NODE_TYPE_NULL,
 
+    MAIN,
+
     STATEMENT,
     CONDITION,
     LOOP,
@@ -26,25 +28,7 @@ enum NodeSubType{
     WHILE_LOOP,
 };
 
-enum NodeDataType{
-    NODE_DATA_NULL,
 
-    VARIABLE,
-    OPERAND,
-    OPERATOR,
-
-};
-
-NodeSubType ConditionSubType[] = {
-    IF_CONDITION,
-    ELSE_CONDITION,
-    ELSE_IF_CONDITION
-};
-
-NodeSubType LoopSubType[] = {
-    FOR_LOOP,
-    WHILE_LOOP
-};
 
 
 struct ASTNode{
