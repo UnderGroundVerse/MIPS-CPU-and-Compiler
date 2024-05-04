@@ -36,36 +36,88 @@ ASTNode Parser::buildStatement(){
     NodeSubType nodeSubType = NODE_SUB_TYPE_NULL;
 
     std::vector<Token> statementTokens = getTokens(SEMICOLON);
-
+    advance();
     return ASTNode(nodeType, nodeSubType, statementTokens);
 }
 
 ASTNode Parser::buildIfCondition(){
+    if(currentToken.tokenType != KEYWORD){
+        //error
+    }
+
     NodeType nodeType = CONDITION;
     NodeSubType nodeSubType = NODE_SUB_TYPE_NULL;
 
     std::vector<Token> conditionTokens;
 
-    std::cout << "IN" << std::endl;
-
     if(currentToken.subType == IF){
         nodeSubType = IF_CONDITION;
-        advance();
-        conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
     } else if( currentToken.subType == ELSEIF){
         nodeSubType = ELSE_IF_CONDITION;
-        advance();
-        conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
     } else if(currentToken.subType == ELSE){
         nodeSubType = ELSE_CONDITION;
+    }else{
+        //error
+    }
+
+    if(currentToken.subType !=  ELSE){
+        advance();
+        if(currentToken.subType != ROUND_BRACKETS_RIGHT){
+            //error
+        }
+        advance();
+        conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
         advance();
     }
 
+    if(currentToken.subType != CURLY_BRACKETS_RIGHT){
+        //error
+    }
     advance();
-    
+
     std::vector<ASTNode> nodes = captureNodes(CURLY_BRACKETS_LEFT);
 
     return ASTNode(nodeType, nodeSubType, conditionTokens, nodes);
+}
+
+ASTNode Parser::buildWhileLoop(){
+    if(currentToken.tokenType != KEYWORD || currentToken.subType != WHILE){
+        //error
+    }
+    advance();
+    if(currentToken.subType != ROUND_BRACKETS_RIGHT){
+        //error
+    }
+    advance();
+    std::vector<Token> conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
+    advance();
+    if(currentToken.subType != CURLY_BRACKETS_RIGHT){
+        //error
+    }
+    advance();
+    std::vector<ASTNode> nodes = captureNodes(CURLY_BRACKETS_LEFT);
+
+    return ASTNode(LOOP, WHILE_LOOP, conditionTokens, nodes);
+}
+
+ASTNode Parser::buildForLoop(){
+    if(currentToken.tokenType != KEYWORD || currentToken.subType != FOR){
+        //error
+    }
+    advance();
+    if(currentToken.subType != ROUND_BRACKETS_RIGHT){
+        //error
+    }    
+    advance();
+    std::vector<Token> conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
+    advance();
+    if(currentToken.subType != CURLY_BRACKETS_RIGHT){
+        //error
+    }
+    advance();
+    std::vector<ASTNode> nodes = captureNodes(CURLY_BRACKETS_LEFT);
+
+    return ASTNode(LOOP, FOR_LOOP, conditionTokens, nodes);
 }
 
 std::vector<ASTNode> Parser::captureNodes(TokenSubType stopingSubtype){
@@ -97,12 +149,3 @@ ASTNode Parser::parseTokens(){
     }
     return ASTNode(MAIN, NODE_SUB_TYPE_NULL, std::vector<Token>(), nodes);
 }
-
-ASTNode Parser::buildWhileLoop(){
-
-}
-
-ASTNode Parser::buildForLoop(){
-
-}
-
