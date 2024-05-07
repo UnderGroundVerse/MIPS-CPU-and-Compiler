@@ -21,9 +21,11 @@ private:
     bool isNum(char);
     bool isQuotation(char);
     bool isSpecialChar(char);
+    bool isOperator(char);
     std::string buildString();
     std::string buildNumber();
     std::string buildStringLiteral();
+    std::string buildOperator();
     bool categorizeString(std::string, TokenType*, TokenSubType*);
     Token buildToken(std::string);
 

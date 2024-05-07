@@ -24,6 +24,7 @@ enum TokenSubType{
     // keyword tokens
     BREAK,
     ELSE,
+    ELSEIF,
     LONG,
     INT,
     CHAR,
@@ -72,6 +73,7 @@ enum TokenSubType{
 const std::string NumLiterals = "0123456789";
 const std::string CharLiterals = "abcdefghijklmnopqrstuvwxyz";
 const std::string SpecialChars = ",.;{}()[] !@#$%^&*_-=<>/|";
+const std::string operators = "=!\\|<>-*&^%/";
 
 
 
@@ -82,6 +84,7 @@ const TokenSubType KeywordTokenSubTypes[] =
 {   
     BREAK, 
     ELSE, 
+    ELSEIF,
     LONG, 
     INT, 
     CHAR, 
@@ -130,6 +133,10 @@ struct Token
     TokenType tokenType;
     TokenSubType subType;
     std::string data;
+
+    Token(){
+
+    }
 
     Token(TokenType tokenType, TokenSubType subType, std::string data)
     {

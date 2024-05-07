@@ -1,10 +1,31 @@
 #include "lexer.h"
+#include "parser.h"
 #include <fstream>
 #include <iostream>
 #include <regex>
 
 
 #define FILE_NAME_REGEX "(.+)\.mips"
+
+void printTokens(std::vector<Token> tokens){
+    for(Token token : tokens){
+        std::cout << "\ttoken type: " << token.tokenType << std::endl;
+        std::cout << "\tSub type: " << token.subType << std::endl;
+        std::cout << "\tData: " << token.data << std::endl;
+        std::cout << std::endl;
+    }
+}
+
+
+void printASTNodes(ASTNode node){
+    std::cout << "Node Type: " << node.nodeType << std::endl;
+    std::cout << "Node SubType: " << node.nodeSubType << std::endl;
+    std::cout << "Node Data: " << std::endl;
+    printTokens(node.nodeData); 
+    for(ASTNode n : node.childNodes){
+        printASTNodes(n);
+    }
+}
 
 
 int main(int argc, char *argv[]){
@@ -29,11 +50,11 @@ int main(int argc, char *argv[]){
     std::vector<Token> temp;
     Lexer lexer(content.data(), content.size());
     std::vector<Token> toks = lexer.analizeFile(temp);
-    for(Token tok : toks){
-        std::cout << "token type: " << tok.tokenType << std::endl;
-        std::cout << "Sub type: " << tok.subType << std::endl;
-        std::cout << "Data: " << tok.data << std::endl;
-        std::cout << std::endl;
-    }
+    printTokens(toks);
+
+    Parser parser(toks);
+    ASTNode astNode = parser.parseTokens();
+    printASTNodes(astNode);
+
     return 0;
 }

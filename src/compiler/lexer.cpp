@@ -15,7 +15,7 @@ std::vector<Token> Lexer::analizeFile(std::vector<Token> out){
     std::vector<Token> tokens;
 
     do{
-        if(currentChar == '\n')
+        if(currentChar == '\n' || currentChar == ' ')
             continue;
         std::string resultString(1, currentChar);
         if(isQuotation(currentChar)){
@@ -26,6 +26,9 @@ std::vector<Token> Lexer::analizeFile(std::vector<Token> out){
         }
         else if (isNum(currentChar)){
             resultString = buildNumber();
+        }
+        else if(isOperator(currentChar)){
+            resultString = buildOperator();
         }
       
         tokens.push_back(buildToken(resultString));
@@ -88,6 +91,14 @@ bool Lexer::isSpecialChar(char c){
     return false;
 }
 
+bool Lexer::isOperator(char c){
+    for(int i = 0; i < operators.length(); i ++ ){
+        if(c == operators[i])
+            return true;
+    }
+    return false;
+}
+
 
 std::string Lexer::buildString(){
     std::string result = "";
@@ -121,25 +132,30 @@ std::string Lexer::buildStringLiteral(){
     return "";
 }
 
+std::string Lexer::buildOperator(){
+    std::string result = "";
+    do{
+        result += currentChar;
+    }while(advance() && (isOperator(currentChar)));
+    return result;
+}
+
 bool Lexer::categorizeString(std::string input, TokenType* tokenType, TokenSubType* subType){
 
     if(std::regex_match(input, std::regex(STRING_LITERAL_REGEX))){
         *tokenType = LITERAL;
         *subType = STRING_LITERAL;
     }
-    else if(std::regex_match(input, std::regex(VARIABLE_REGEX))){
-        *tokenType = IDENTIFIER;
-        *subType = VARIABLE;
-    }
     else if(std::regex_match(input, std::regex(NUM_LITERAL_REGEX))){
         *tokenType = LITERAL;
         *subType = NUMBER_LITERAL;
     }
-    else{
+    else if(StringSubTypeMap.count(input) != 0 ){
         *subType = StringSubTypeMap[input];
+
         for(TokenSubType sub : KeywordTokenSubTypes){
             if(sub == *subType)
-                *tokenType = IDENTIFIER;
+                *tokenType = KEYWORD;
         }
         for(TokenSubType sub : SeparatorTokenSubTypes){
             if(sub == *subType){
@@ -152,6 +168,15 @@ bool Lexer::categorizeString(std::string input, TokenType* tokenType, TokenSubTy
             }
         }
     }
+    else if(std::regex_match(input, std::regex(VARIABLE_REGEX))){
+        *tokenType = IDENTIFIER;
+        *subType = VARIABLE;
+        return true;
+    }
+    else
+        return false;
+
+    return true;
 }
 
 Token Lexer::buildToken(std::string input){
