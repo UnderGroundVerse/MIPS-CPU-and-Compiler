@@ -4,9 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity TempRegisters is
   generic (
-    -- Number of registers (default 8 for t0-t7)
-    c : integer range 1 to 31 := 8,
-    -- Register size in bits (default 32 for MIPS)
+    c:integer :=8;
     n : integer range 1 to 64 := 32
   );
   port (
@@ -20,7 +18,7 @@ entity TempRegisters is
 end TempRegisters;
 
 architecture Behavioral of TempRegisters is
-  type register_array is array (0 to c-1) of std_logic_vector(n-1 downto 0);
+  type register_array is array (0 to n-1) of std_logic_vector(n-1 downto 0);
   signal registers : register_array;
 begin
   process(clk, reset)
