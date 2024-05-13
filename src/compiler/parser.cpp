@@ -13,7 +13,7 @@ Parser::Parser(std::vector<Token> tokens){
 }
 
 bool Parser::advance(){
-    if(position >= tokens.size()-1){
+    if(position > tokens.size()-1){
         return false;
     }
     position ++;
@@ -36,13 +36,16 @@ ASTNode Parser::buildStatement(){
     NodeSubType nodeSubType = NODE_SUB_TYPE_NULL;
 
     std::vector<Token> statementTokens = getTokens(SEMICOLON);
+    std::cout << "statement end >> " << currentToken.data << std::endl; 
     advance();
-    return ASTNode(nodeType, nodeSubType, statementTokens);
+    return ASTNode(nodeType, nodeSubType, statementTokens, std::vector<ASTNode>());
 }
 
 ASTNode Parser::buildIfCondition(){
+    std::cout << "ENTERED IF " << std::endl;
     if(currentToken.tokenType != KEYWORD){
         //error
+        return ASTNode();
     }
 
     NodeType nodeType = CONDITION;
@@ -58,20 +61,25 @@ ASTNode Parser::buildIfCondition(){
         nodeSubType = ELSE_CONDITION;
     }else{
         //error
+        return ASTNode();
     }
 
     if(currentToken.subType !=  ELSE){
         advance();
         if(currentToken.subType != ROUND_BRACKETS_RIGHT){
             //error
+            return ASTNode();
         }
         advance();
         conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
         advance();
     }
 
+    //conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
+
     if(currentToken.subType != CURLY_BRACKETS_RIGHT){
         //error
+        return ASTNode();
     }
     advance();
 
@@ -123,11 +131,13 @@ ASTNode Parser::buildForLoop(){
 std::vector<ASTNode> Parser::captureNodes(TokenSubType stopingSubtype){
     std::vector<ASTNode> nodes;
     while(currentToken.subType != stopingSubtype){
+        std::cout  << currentToken.data << std::endl;
         if(currentToken.tokenType == IDENTIFIER){
             if(currentToken.subType == VARIABLE){
                 nodes.push_back(buildStatement());
             }
         } else if(currentToken.tokenType == KEYWORD){
+            std::cout << "entered Keyword" << std::endl;
             if(currentToken.subType == IF || currentToken.subType == ELSEIF || currentToken.subType == ELSE){
                 nodes.push_back(buildIfCondition());
             }else if(currentToken.subType == WHILE){

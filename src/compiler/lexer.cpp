@@ -10,7 +10,7 @@
 #define VARIABLE_REGEX          "^([A-Z]|[a-z])+(_*|[0-9]|[A-Z]|[a-z])*$"
 #define NUM_LITERAL_REGEX       "^[0-9]+(\.*)*[0-9]*$"
 
-std::vector<Token> Lexer::analizeFile(std::vector<Token> out){
+std::vector<Token> Lexer::analizeFile(){
 
     std::vector<Token> tokens;
 
@@ -60,7 +60,7 @@ bool Lexer::retreat(){
 }
 
 
-bool Lexer::isChar(char c){
+bool Lexer::isChar(char c){ // ascii
     for(int i = 0; i < CharLiterals.length(); i ++){
         if(c == CharLiterals[i])
             return true;
@@ -126,10 +126,10 @@ std::string Lexer::buildStringLiteral(){
         result += currentChar;
     }while(advance() && (isChar(currentChar) || isNum(currentChar)) || isSpecialChar(currentChar));
     
-    if(currentChar == qoutation){
-        return qoutation + result + qoutation;
+    if(currentChar != qoutation){
+        return "";
     }
-    return "";
+    return qoutation + result + qoutation;
 }
 
 std::string Lexer::buildOperator(){

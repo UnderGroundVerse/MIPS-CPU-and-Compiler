@@ -9,6 +9,7 @@
 
 
 
+
 class Lexer{
 private:
     const char* file;
@@ -31,7 +32,7 @@ private:
 
 public:
     Lexer(const char*, int);
-    std::vector<Token> analizeFile(std::vector<Token>);
+    std::vector<Token> analizeFile();
 
 };
 

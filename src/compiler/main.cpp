@@ -17,13 +17,17 @@ void printTokens(std::vector<Token> tokens){
 }
 
 
-void printASTNodes(ASTNode node){
+void printASTNodes(ASTNode node, int num){
+    std::cout << "NODE NUM: " << num << std::endl;
     std::cout << "Node Type: " << node.nodeType << std::endl;
     std::cout << "Node SubType: " << node.nodeSubType << std::endl;
     std::cout << "Node Data: " << std::endl;
     printTokens(node.nodeData); 
+    int i = 0;
+    std::cout << "ROOT: " << num << std::endl;
     for(ASTNode n : node.childNodes){
-        printASTNodes(n);
+        printASTNodes(n, i);
+        i++;
     }
 }
 
@@ -47,14 +51,13 @@ int main(int argc, char *argv[]){
             content.push_back(c);
         }
     }
-    std::vector<Token> temp;
     Lexer lexer(content.data(), content.size());
-    std::vector<Token> toks = lexer.analizeFile(temp);
+    std::vector<Token> toks = lexer.analizeFile();
     printTokens(toks);
 
     Parser parser(toks);
     ASTNode astNode = parser.parseTokens();
-    printASTNodes(astNode);
+    printASTNodes(astNode, 0);
 
     return 0;
 }

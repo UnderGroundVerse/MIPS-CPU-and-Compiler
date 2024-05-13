@@ -8,6 +8,7 @@
 
 enum TokenType{
     TOKEN_TYPE_NULL,
+
     IDENTIFIER,
     KEYWORD,
     SEPARATOR,

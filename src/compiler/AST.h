@@ -37,6 +37,10 @@ struct ASTNode{
     std::vector<Token> nodeData;
     std::vector<ASTNode> childNodes;
 
+    ASTNode(){
+        
+    }
+
     ASTNode(NodeType nodeType, NodeSubType nodeSubType, std::vector<Token> nodeData){
         this->nodeType = nodeType;
         this->nodeSubType = nodeSubType;
