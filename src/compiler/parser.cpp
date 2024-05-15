@@ -36,13 +36,12 @@ ASTNode Parser::buildStatement(){
     NodeSubType nodeSubType = NODE_SUB_TYPE_NULL;
 
     std::vector<Token> statementTokens = getTokens(SEMICOLON);
-    std::cout << "statement end >> " << currentToken.data << std::endl; 
     advance();
     return ASTNode(nodeType, nodeSubType, statementTokens, std::vector<ASTNode>());
 }
 
 ASTNode Parser::buildIfCondition(){
-    std::cout << "ENTERED IF " << std::endl;
+  
     if(currentToken.tokenType != KEYWORD){
         //error
         return ASTNode();
@@ -98,6 +97,7 @@ ASTNode Parser::buildWhileLoop(){
     }
     advance();
     std::vector<Token> conditionTokens = getTokens(ROUND_BRACKETS_LEFT);
+   
     advance();
     if(currentToken.subType != CURLY_BRACKETS_RIGHT){
         //error
@@ -131,19 +131,22 @@ ASTNode Parser::buildForLoop(){
 std::vector<ASTNode> Parser::captureNodes(TokenSubType stopingSubtype){
     std::vector<ASTNode> nodes;
     while(currentToken.subType != stopingSubtype){
-        std::cout  << currentToken.data << std::endl;
         if(currentToken.tokenType == IDENTIFIER){
             if(currentToken.subType == VARIABLE){
                 nodes.push_back(buildStatement());
+                continue;
             }
-        } else if(currentToken.tokenType == KEYWORD){
-            std::cout << "entered Keyword" << std::endl;
+        }
+        else if(currentToken.tokenType == KEYWORD){
             if(currentToken.subType == IF || currentToken.subType == ELSEIF || currentToken.subType == ELSE){
                 nodes.push_back(buildIfCondition());
+                continue;
             }else if(currentToken.subType == WHILE){
                 nodes.push_back(buildWhileLoop());
+                continue;
             }else if(currentToken.subType == FOR){
                 nodes.push_back(buildForLoop());
+                continue;
             }
         }
         advance();
