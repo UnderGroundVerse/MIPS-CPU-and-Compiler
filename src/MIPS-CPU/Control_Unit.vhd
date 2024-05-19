@@ -36,9 +36,9 @@ c: integer := 6;
 p: integer :=2
 );
 port (
-  opcode: in std_logic_vector(c-1 downto 0);
+  opcode: in std_logic_vector(5 downto 0);
 	
-	alu_op: out std_logic_vector(p-1 downto 0);
+	alu_op: out std_logic_vector(1 downto 0);
   mem_to_reg,reg_dst,jump,branch,mem_read,mem_write,alu_src,reg_write: out std_logic;
   clk : in std_logic
  );
