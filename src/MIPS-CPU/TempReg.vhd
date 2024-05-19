@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED;
 use IEEE.NUMERIC_STD.ALL;
 
 entity TempRegisters is
@@ -29,11 +30,11 @@ begin
     elsif rising_edge(clk) then
       -- Update registers based on write enable and register select
       if write_enable = '1' then
-        registers(conv_integer(reg_select)) <= write_data;
+        registers(to_integer(unsigned(reg_select))) <= write_data;
       end if;
     end if;
   end process;
 
   -- Output the selected register's data
-  read_data <= registers(conv_integer(reg_select));
+  read_data <= registers(to_integer(unsigned(reg_select)));
 end Behavioral;
