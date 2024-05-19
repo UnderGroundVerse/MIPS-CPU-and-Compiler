@@ -4,7 +4,7 @@ use IEEE.numeric_std.all;
 
 entity Data_Memory_VHDL is
   generic (
-    Addressbytes : integer := 32;  -- Number of bits for address
+    Addressbytes : integer := 32  -- Number of bits for address
   );
   port (
     clk             : in std_logic;

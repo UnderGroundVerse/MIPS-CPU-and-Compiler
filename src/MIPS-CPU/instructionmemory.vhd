@@ -4,7 +4,7 @@ use IEEE.numeric_std.all;
 
 entity Instruction_Memory_VHDL is
     generic (
-        Addressbytes : integer := 32;  -- Number of address bits
+        Addressbytes : integer := 32  -- Number of address bits
     );
     port (
         pc: in std_logic_vector(2**Addressbytes - 1 downto 0);
