@@ -38,19 +38,19 @@ n: integer :=32
 port( 
 
 regWrite : in std_logic ; --contol unit sent value
-read_reg1 : in std_logic_vector (c-1 downto 0); --address of 1'st inside array to pass it's data to alu
-read_reg2 : in std_logic_vector (c-1 downto 0); --address of 2'nt inside array to pass it's data to alu
-write_reg : in std_logic_vector (c-1 downto 0); --address of reg inside array to be written on
-write_data :in std_logic_vector (n-1 downto 0); --The data to be written on
-read_data1 :out std_logic_vector (n-1 downto 0); --The data of 1'st reg to be sent to ALU
-read_data2 : out std_logic_vector (n-1 downto 0); --The data of 2'nd reg to be sent to ALU
+read_reg1 : in std_logic_vector (4 downto 0); --address of 1'st inside array to pass it's data to alu
+read_reg2 : in std_logic_vector (4 downto 0); --address of 2'nt inside array to pass it's data to alu
+write_reg : in std_logic_vector (4 downto 0); --address of reg inside array to be written on
+write_data :in std_logic_vector (31 downto 0); --The data to be written on
+read_data1 :out std_logic_vector (31 downto 0); --The data of 1'st reg to be sent to ALU
+read_data2 : out std_logic_vector (31 downto 0); --The data of 2'nd reg to be sent to ALU
 clk,rst : in std_logic
 );
 end RegFile;
 
 architecture Behavioral of RegFile is
-type reg_type is array (n-1 downto 0)  of std_logic_vector (n-1 downto 0);
-signal reg_array :reg_type := (others => "00000000000000000000000000000000");
+type reg_type is array (4 downto 0)  of std_logic_vector (31 downto 0);
+signal reg_array :reg_type := (others => X"00000000");
 
 begin
 
@@ -58,7 +58,7 @@ process(clk,rst)
 begin
 	if(rst='1') 
 		 then
-		reg_array <= (others => "00000000000000000000000000000000");
+		reg_array <= (others => X"00000000");
 		
 	elsif(rising_edge(clk))
 		then
