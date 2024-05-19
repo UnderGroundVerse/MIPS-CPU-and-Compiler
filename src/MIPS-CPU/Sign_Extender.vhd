@@ -29,14 +29,14 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Sign_Extenter is
+entity Sign_Extender is
     Port ( immediate_in : in  STD_LOGIC_VECTOR (15 downto 0);
            immediate_out : out  STD_LOGIC_VECTOR (31 downto 0);
 			  clk : in std_logic);
 			 
-end Sign_Extenter;
+end Sign_Extender;
 
-architecture Behavioral of Sign_Extenter is
+architecture Behavioral of Sign_Extender is
 signal bits_holder : std_logic_vector (15 downto 0);
 begin
 
