@@ -37,8 +37,10 @@ generic(
  
 port(
 	alu_op : in std_logic_vector(p-1 downto 0);
+	alu_zero : out std_logic;
 	alu_out : out std_logic_vector (n-1 downto 0);
 	function_op : in std_logic_vector(c-1 downto 0);
+	alu_shamt:in std_logic_vector (4 downto 0) :=(others=>'0');
 	operand1,operand2 : in std_logic_vector(n-1 downto 0);
 	clk: in std_logic
 	);
@@ -53,7 +55,10 @@ component ALU
 PORT(
 	alu_control_in: in std_logic_vector(3 downto 0);
 	alu_out :out std_logic_vector (31 downto 0);
+	alu_zero : out std_logic;
+	alu_shamt:in std_logic_vector (4 downto 0) :=(others=>'0');
 	operand1,operand2 :in std_logic_vector(31 downto 0);
+	
 	clk : in std_logic
 );
 end component;
@@ -80,9 +85,11 @@ alu_op=>alu_op,
 clk=>clk	);
 
 p2: ALU port map(alu_control_in=>alu_c,
+alu_shamt=>alu_shamt,
 alu_out=>alu_out,
 operand1=>operand1,
 operand2=>operand2,
+alu_zero=>alu_zero,
 clk=>clk);
 
 

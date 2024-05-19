@@ -21,6 +21,8 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
+
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -40,7 +42,9 @@ c: integer := 6
 port(
 	alu_control_in: in std_logic_vector(3 downto 0);
 	alu_out :out std_logic_vector (n-1 downto 0);
+	alu_zero:out std_logic;
 	operand1,operand2 :in std_logic_vector(n-1 downto 0);
+	alu_shamt:in std_logic_vector (4 downto 0) :=(others=>'0');
 	clk :in std_logic
 );
 end ALU;
@@ -60,6 +64,7 @@ process(clk)
 begin
 if (rising_edge(clk)) 
 	then
+	alu_zero<='0';
 	case alu_control_in is
 		when "0010" => 
 			result<= operand1 + operand2;
@@ -73,10 +78,14 @@ if (rising_edge(clk))
 			mul<= operand1 * operand2;
 			lo<=mul(31 downto 0);
 			hi<=mul(63 downto 32);
-			result<=lo;
+			result<=lo;	
 		when others =>
 			result <= (others => '0');
 		end case;
+		if((alu_control_in="0110") and (result = (X"00000000"))) then
+			alu_zero<='1';
+		end if;
+		
 	end if;
 		end process;
 	alu_out<=result;
