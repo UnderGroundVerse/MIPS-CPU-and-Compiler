@@ -1,6 +1,8 @@
 -- Temporary register file for MIPS architecture (pipeline example with generics)
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity TempRegisters is
   generic (
@@ -31,12 +33,12 @@ begin
     elsif rising_edge(clk) then
       -- (triggered by read request)
       if read_req = '1' then
-        read_data <= registers(conv_integer(reg_select));
+        read_data <= registers(to_integer(unsigned(reg_select)));
       end if;
 
       --(triggered by write request)
       if write_req = '1' then
-        registers(conv_integer(reg_select)) <= write_data;
+        registers(to_integer(unsigned(reg_select))) <= write_data;
       end if;
     end if;
   end process;
