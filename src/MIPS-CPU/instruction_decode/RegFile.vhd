@@ -31,10 +31,6 @@ use ieee.numeric_std.all;
 --use UNISIM.VComponents.all;
 
 entity RegFile is
-generic (c:integer :=6;
-n: integer :=32
-
-);
 port( 
 
 regWrite : in std_logic ; --contol unit sent value
