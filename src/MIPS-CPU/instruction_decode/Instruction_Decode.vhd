@@ -7,10 +7,13 @@ use ieee.numeric_std.all;
 entity Instruction_Decode is
     port(
         clk, rst, reg_write, reg_dst : in std_logic;
+        pc : in std_logic_vector(31 downto 0);
         instruction : in std_logic_vector(31 downto 0);
         write_data : in std_logic_vector(31 downto 0);
         read_data1, read_data2 : out std_logic_vector(31 downto 0);
-        extended_sign : out std_logic_vector(31 downto 0)
+        extended_sign : out std_logic_vector(31 downto 0);
+        function_op : out std_logic_vector(5 downto 0);
+        jump_address : out std_logic_vector(31 downto 0)
     );
 end Instruction_Decode;
 
@@ -50,8 +53,17 @@ architecture Behavioral of Instruction_Decode is
     end component;
 
     signal mux_out : std_logic_vector(4 downto 0);
+    signal pc_extended : std_logic_vector(31 downto 0) := X"00000000";
 
 begin
+
+    pc_extended(25 downto 0) <= instruction(25 downto 0);
+    pc_extended <= std_logic_vector(shift_left(unsigned(pc_extended), 2));
+    pc_extended(31 downto 28) <= pc(31  downto 28);
+
+    jump_address <= pc_extended;
+
+    function_op <= instruction(5 downto 0);
 
     extender : Sign_Extender port map(
         immediate_in => instruction(15 downto 0),
