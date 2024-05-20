@@ -6,13 +6,15 @@ use ieee.numeric_std.all;
 
 entity Instruction_Decode is
     port(
-        clk, rst, reg_write, reg_dst : in std_logic;
+        clk, rst, reg_write: in std_logic;
         pc : in std_logic_vector(31 downto 0);
         instruction : in std_logic_vector(31 downto 0);
         write_data : in std_logic_vector(31 downto 0);
+        reg_dst_address : in std_logic_vector(4 downto 0);
         read_data1, read_data2 : out std_logic_vector(31 downto 0);
         extended_sign : out std_logic_vector(31 downto 0);
         function_op : out std_logic_vector(5 downto 0);
+        register_target, register_destination : out std_logic_vector(4 downto 0);
         jump_address : out std_logic_vector(31 downto 0)
     );
 end Instruction_Decode;
@@ -52,7 +54,6 @@ architecture Behavioral of Instruction_Decode is
                  
     end component;
 
-    signal mux_out : std_logic_vector(4 downto 0);
     signal pc_extended : std_logic_vector(31 downto 0) := X"00000000";
 
 begin
@@ -65,25 +66,20 @@ begin
 
     function_op <= instruction(5 downto 0);
 
+    register_target <= instruction(20 downto 16);
+    register_destination <= instruction(15 downto 11);
+
     extender : Sign_Extender port map(
         immediate_in => instruction(15 downto 0),
         immediate_out => extended_sign,
         clk => clk
-    );
-
-    mux1 : Mux2x1 generic map(n => 5)
-    port map(
-        input0 => instruction(20 downto 16),
-        input1 => instruction(15 downto 11),
-        selector => reg_dst,
-        mux_out => mux_out
     );
     
     reg_file : RegFile port map(
         regWrite => reg_write,
         read_reg1 => instruction(25 downto 21),
         read_reg2 => instruction(20 downto 16),
-        write_reg => mux_out,
+        write_reg => reg_dst_address,
         write_data => write_data,
         read_data1 => read_data1,
         read_data2 => read_data2,
