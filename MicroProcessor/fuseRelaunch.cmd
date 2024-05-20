@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "secureip" -o "C:/Users/mo/Desktop/Project/MicroProcessor/AlUComponent_tb_isim_beh.exe" -prj "C:/Users/mo/Desktop/Project/MicroProcessor/AlUComponent_tb_beh.prj" "work.AlUComponent_tb" 
