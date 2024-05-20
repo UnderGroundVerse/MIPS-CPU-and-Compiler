@@ -4,52 +4,55 @@ use IEEE.numeric_std.all;
 
 entity Instruction_Memory_VHDL is
     generic (
-        Addressbytes : integer := 32  -- Number of address bits
+        n : integer := 32  -- Number of address bits
     );
     port (
-        pc: in std_logic_vector(2**Addressbytes - 1 downto 0);
-        instruction: out std_logic_vector(2**Addressbytes - 1 downto 0)
+        pc: in std_logic_vector(n - 1 downto 0);
+        instruction: out std_logic_vector(n - 1 downto 0)
     );
 end Instruction_Memory_VHDL;
 
 architecture Behavioral of Instruction_Memory_VHDL is
-    signal rom_addr: std_logic_vector(Addressbytes -1  downto 0);
-    type ROM_type is array (0 to (2**Addressbytes ) - 1) of std_logic_vector(2**Addressbytes - 1 downto 0);
+    signal rom_addr: std_logic_vector(n -1  downto 0);
+	 signal instruction_holder: std_logic_vector(n-1 downto 0);
+    type ROM_type is array (n - 1 downto 0) of std_logic_vector(7 downto 0);
     constant rom_data: ROM_type := (
-        "00000000001000000110000000100000",  
-        "10001100000010000000000000100100",  
-        "10101100001010000000000000011000",
-        "10001100000010000000000001100100",  
-        "10101100001010000000100000011010",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000",
-        "00000000000000000000000000000000"
+        "00100000",  
+        "10001100",  
+        "10101101",
+        "10001100",  
+        "10101100",
+        "00000001",
+        "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+		  "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+		  "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+		  "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+		  "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+        "00000000",
+		  "00000000"
     );
 begin
-    rom_addr <= pc(Addressbytes downto 1);
-    instruction <= rom_data(to_integer(unsigned(rom_addr))) when pc < x"0020" else x"0000";
+    rom_addr <= pc;
+	 instruction_holder<= rom_data(to_integer(unsigned(rom_addr(31 downto 23)))) & rom_data(to_integer(unsigned(rom_addr(23 downto 16)))) & 
+		rom_data(to_integer(unsigned(rom_addr(16 downto 8)))) & rom_data(to_integer(unsigned(rom_addr(8 downto 0))));
+    instruction <= instruction_holder  when pc < x"0020" else x"0000";
 end Behavioral;

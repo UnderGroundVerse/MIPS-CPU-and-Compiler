@@ -98,7 +98,7 @@ mem_read=>mem_read,
 mem_read_data=>mem_read_data
 );
 
-pc_src_branch_1 : Mux2x1 generic map (n=>32)
+pc_src_branch_mux : Mux2x1 generic map (n=>32)
 
 port map(
 input0=>ideal_pc,
@@ -106,7 +106,7 @@ input1=>pc_from_branch,
 selector=>pc_src_selector,
 mux_out=>pc_from_pcsrc1
 );
-pc_src_branch_2 : Mux2x1 generic map (n=>32)
+pc_src_jump_mux : Mux2x1 generic map (n=>32)
 
 port map(
 input0=>pc_from_pcsrc1,
