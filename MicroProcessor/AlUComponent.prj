@@ -1,0 +1,3 @@
+vhdl work "ALUControlUnit.vhd"
+vhdl work "ALU.vhd"
+vhdl work "AlUComponent.vhd"

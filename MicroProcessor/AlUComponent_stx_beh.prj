@@ -1,0 +1,3 @@
+vhdl isim_temp "ALUControlUnit.vhd"
+vhdl isim_temp "ALU.vhd"
+vhdl isim_temp "AlUComponent.vhd"
