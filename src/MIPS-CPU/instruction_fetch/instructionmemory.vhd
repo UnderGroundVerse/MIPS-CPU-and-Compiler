@@ -7,7 +7,6 @@ entity Instruction_Memory_VHDL is
         n : integer := 32  -- Number of address bits
     );
     port (
-	 clk : in std_logic ;
         pc: in std_logic_vector(n - 1 downto 0);
         instruction: out std_logic_vector(n - 1 downto 0)
     );
@@ -55,8 +54,6 @@ architecture Behavioral of Instruction_Memory_VHDL is
     );
 begin
 
-process(clk)
-begin
     rom_addr <= pc;
 
 	 rom_addr <= pc;
@@ -64,6 +61,5 @@ begin
 	  rom_data(to_integer(unsigned(rom_addr))+1 ) & rom_data(to_integer(unsigned(rom_addr))) ;
     instruction <= instruction_holder  ;
 
-end process;
 
 end Behavioral;

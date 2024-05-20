@@ -38,7 +38,7 @@ entity Memory_Access is
 	port
 	(
     
-	 clk             : in std_logic;
+	  clk             : in std_logic;
     mem_access_addr : in std_logic_vector( n - 1 downto 0);
     mem_write_data  : in std_logic_vector( n - 1 downto 0);
     mem_write_en    : in std_logic;
@@ -66,7 +66,7 @@ end component;
 
 begin
 
-pc_src_selector<= branch and alu_zero;
+
 
 data_memory : Data_Memory_VHDL generic map(n => 32)
 port map(
