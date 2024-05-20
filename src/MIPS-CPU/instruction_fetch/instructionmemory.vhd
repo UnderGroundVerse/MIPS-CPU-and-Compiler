@@ -14,7 +14,7 @@ end Instruction_Memory_VHDL;
 
 architecture Behavioral of Instruction_Memory_VHDL is
     signal rom_addr: std_logic_vector(n -1  downto 0);
-	 signal instruction_holder: std_logic_vector(n-1 downto 0) := X"00000000";
+	signal instruction_holder: std_logic_vector(n-1 downto 0) := X"00000000";
     type ROM_type is array (n - 1 downto 0) of std_logic_vector(7 downto 0);
     constant rom_data: ROM_type := (
         "00100000",  
@@ -28,27 +28,27 @@ architecture Behavioral of Instruction_Memory_VHDL is
         "00000000",
         "00000000",
         "00000000",
-		  "00000000",
+		"00000000",
         "00000000",
         "00000000",
         "00000000",
         "00000000",
-		  "00000000",
+		"00000000",
         "00000000",
         "00000000",
         "00000000",
         "00000000",
-		  "00000000",
+		"00000000",
         "00000000",
         "00000000",
         "00000000",
         "00000000",
-		  "00000000",
+		"00000000",
         "00000000",
         "00000000",
         "00000000",
         "00000000",
-		  "00000000"
+		"00000000"
     );
 begin
     rom_addr <= pc;
@@ -59,5 +59,5 @@ begin
     instruction_holder(7 downto 0) <= rom_data(to_integer(unsigned(rom_addr)));
     instruction_holder(15 downto 8) <= rom_data(to_integer(unsigned(rom_addr))+1);
     instruction_holder(23 downto 16) <= rom_data(to_integer(unsigned(rom_addr))+2);
-    instruction_holder(31 downto 24) <= rom_data(to_integer(unsigned(rom_addr))+2);
+    instruction_holder(31 downto 24) <= rom_data(to_integer(unsigned(rom_addr))+3);
 end Behavioral;
