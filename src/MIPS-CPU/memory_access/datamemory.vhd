@@ -4,22 +4,22 @@ use IEEE.numeric_std.all;
 
 entity Data_Memory_VHDL is
   generic (
-    Addressbytes : integer := 32  -- Number of bits for address
+    n : integer := 32  -- Number of bits for address
   );
   port (
     clk             : in std_logic;
-    mem_access_addr : in std_logic_vector( 2**Addressbytes - 1 downto 0);
-    mem_write_data  : in std_logic_vector(2**Addressbytes - 1 downto 0);
+    mem_access_addr : in std_logic_vector( n- 1 downto 0);
+    mem_write_data  : in std_logic_vector(n - 1 downto 0);
     mem_write_en    : in std_logic;
     mem_read        : in std_logic;
-    mem_read_data   : out std_logic_vector(2**Addressbytes - 1 downto 0)
+    mem_read_data   : out std_logic_vector(n - 1 downto 0)
   );
 end Data_Memory_VHDL;
 
 architecture Behavioral of Data_Memory_VHDL is
-  signal ram_addr : std_logic_vector(Addressbytes - 1 downto 0);
-  type data_mem is array (natural range <>) of std_logic_vector(2**Addressbytes - 1 downto 0);
-  signal RAM : data_mem(0 to 2**Addressbytes - 1) := (others => (others => '0'));
+  signal ram_addr : std_logic_vector(n - 1 downto 0);
+  type data_mem is array  (2**16 - 1 downto 0) of std_logic_vector(n - 1 downto 0);
+  signal RAM : data_mem :=(others => X"00000000") ;
 begin
 
   ram_addr <= mem_access_addr;
