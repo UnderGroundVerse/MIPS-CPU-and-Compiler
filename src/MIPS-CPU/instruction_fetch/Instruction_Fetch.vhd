@@ -16,19 +16,18 @@ architecture Behavioral of Instruction_Fetch is
 
     component Instruction_Memory_VHDL is
         generic (
-            n : integer := 32  -- Number of address bits
+            Addressbytes : integer := 32  -- Number of address bits
         );
         port (
-            pc: in std_logic_vector(n - 1 downto 0);
-            instruction: out std_logic_vector(n - 1 downto 0)
+            pc: in std_logic_vector(2**Addressbytes - 1 downto 0);
+            instruction: out std_logic_vector(2**Addressbytes - 1 downto 0)
         );
     end component;
 
 
 
 begin
-
-    instruction_memory : Instruction_Memory_VHDL generic map ( n => 32)
+    instruction_memory : Instruction_Memory_VHDL generic map ( Addressbytes => 32)
     port map(
         pc => pc_in,
         instruction => instruction_out  
