@@ -13,7 +13,7 @@ entity Instruction_Fetch is
 		jump : in std_logic;
 		pc_src_selector : in std_logic;
         pc_from_jump : in std_logic_vector(31 downto 0);
-	    pc_from_branch  : in std_logic_vector(n-1 downto 0);
+	    pc_from_branch  : in std_logic_vector(31 downto 0);
 		pc_out          : out std_logic_vector(31 downto 0);
         instruction_out : out std_logic_vector(31 downto 0)
     );
@@ -23,11 +23,11 @@ architecture Behavioral of Instruction_Fetch is
 
     component Instruction_Memory_VHDL is
         generic (
-            Addressbytes : integer := 32  -- Number of address bits
+            n : integer := 32  -- Number of address bits
         );
         port (
-            pc: in std_logic_vector(2**Addressbytes - 1 downto 0);
-            instruction: out std_logic_vector(2**Addressbytes - 1 downto 0)
+            pc: in std_logic_vector(n - 1 downto 0);
+            instruction: out std_logic_vector(n - 1 downto 0)
         );
     end component;
 	 
@@ -55,13 +55,13 @@ architecture Behavioral of Instruction_Fetch is
         port(
             clk : in std_logic;
             pc_in : in std_logic_vector(31 downto 0);
-            pc_out : in std_logic_vector(31 downto 0)
+            pc_out : out std_logic_vector(31 downto 0)
         );
     end component;
 	 
-signal pc_from_pcsrc1 : std_logic_vector (n-1 downto 0) :=(others =>'0') ;
-signal pc_4 : std_logic_vector (n-1 downto 0) :=(others =>'0') ;
-signal pc_in : std_logic_vector (n-1 downto 0) :=(others =>'0') ;
+signal pc_from_pcsrc1 : std_logic_vector (31 downto 0) :=(others =>'0') ;
+signal pc_4 : std_logic_vector (31 downto 0) :=(others =>'0') ;
+signal pc_in : std_logic_vector (31 downto 0) :=(others =>'0') ;
 signal pc_temp : std_logic_vector (31 downto 0);
 
 begin
@@ -95,10 +95,12 @@ begin
         pc_out => pc_4
     );
 
-    instruction_memory : Instruction_Memory_VHDL generic map ( Addressbytes => 32)
+    instruction_memory : Instruction_Memory_VHDL generic map ( n => 32)
     port map(
         pc => pc_in,
         instruction => instruction_out  
     );
 
+    pc_out <= pc_4;
+    
 end Behavioral;

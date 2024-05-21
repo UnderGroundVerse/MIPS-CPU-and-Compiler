@@ -14,8 +14,7 @@ entity Instruction_Decode is
         read_data1, read_data2 : out std_logic_vector(31 downto 0);
         extended_sign : out std_logic_vector(31 downto 0);
         function_op : out std_logic_vector(5 downto 0);
-        register_target, register_destination : out std_logic_vector(4 downto 0);
-        jump_address : out std_logic_vector(31 downto 0)
+        register_target, register_destination : out std_logic_vector(4 downto 0)
     );
 end Instruction_Decode;
 
@@ -54,15 +53,9 @@ architecture Behavioral of Instruction_Decode is
                  
     end component;
 
-    signal pc_extended : std_logic_vector(31 downto 0) := X"00000000";
-
 begin
 
-    pc_extended(25 downto 0) <= instruction(25 downto 0);
-    pc_extended <= std_logic_vector(shift_left(unsigned(pc_extended), 2));
-    pc_extended(31 downto 28) <= pc(31  downto 28);
-
-    jump_address <= pc_extended;
+ 
 
     function_op <= instruction(5 downto 0);
 

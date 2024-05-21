@@ -47,6 +47,8 @@ end RegFile;
 architecture Behavioral of RegFile is
 type reg_type is array (31 downto 0)  of std_logic_vector (31 downto 0);
 signal reg_array :reg_type := (others => X"00000000");
+signal read_data1_temp : std_logic_vector(31 downto 0) := X"00000000";
+signal read_data2_temp : std_logic_vector(31 downto 0) := X"00000000";
 
 begin
 
@@ -64,10 +66,12 @@ begin
 			
 			elsif(regWrite ='0') 
 				then
-		read_data1<= reg_array(to_integer(unsigned(read_reg1)));	
-		read_data2<= reg_array(to_integer(unsigned(read_reg2)));		
+		read_data1_temp<= reg_array(to_integer(unsigned(read_reg1)));	
+		read_data2_temp<= reg_array(to_integer(unsigned(read_reg2)));		
 	end if;	
 end if;	
 end process;
+read_data1 <= read_data1_temp;
+read_data2 <= read_data2_temp;
 end Behavioral;
 

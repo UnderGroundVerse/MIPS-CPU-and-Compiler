@@ -21,7 +21,7 @@ begin
     process(clk)
     begin
         pc_out <= pc_temp;
-        if(rising_edge(clk)) then
+        if(falling_edge(clk)) then
             pc_out <= pc_in;
         end if;
     end process;
