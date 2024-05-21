@@ -51,7 +51,8 @@ end ALU;
 
 architecture Behavioral of ALU is
 
-signal result : std_logic_vector (n-1 downto 0);
+signal result : std_logic_vector (n-1 downto 0):= (others=>'0');
+signal alu_zero_temp : std_logic := '0';
 signal mul : std_logic_vector (63 downto 0);
 signal div : std_logic_vector (63 downto 0);
 signal hi : std_logic_vector (n-1 downto 0);
@@ -64,7 +65,7 @@ process(clk)
 begin
 if (rising_edge(clk)) 
 	then
-	alu_zero<='0';
+	alu_zero_temp<='0';
 	case alu_control_in is
 		when "0010" => 
 			result<= operand1 + operand2;
@@ -83,12 +84,13 @@ if (rising_edge(clk))
 			result <= (others => '0');
 		end case;
 		if((alu_control_in="0110") and (result = (X"00000000"))) then
-			alu_zero<='1';
+			alu_zero_temp<='1';
 		end if;
 		
 	end if;
 		end process;
 	alu_out<=result;
+	alu_zero <= alu_zero_temp;
 
 end Behavioral;
 
