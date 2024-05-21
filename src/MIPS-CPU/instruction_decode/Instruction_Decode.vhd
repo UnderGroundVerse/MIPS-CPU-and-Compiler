@@ -10,7 +10,7 @@ entity Instruction_Decode is
         pc : in std_logic_vector(31 downto 0);
         instruction : in std_logic_vector(31 downto 0);
         write_data : in std_logic_vector(31 downto 0);
-        reg_dst_address : in std_logic_vector(4 downto 0);
+        reg_write_back : in std_logic_vector(4 downto 0);
         read_data1, read_data2 : out std_logic_vector(31 downto 0);
         extended_sign : out std_logic_vector(31 downto 0);
         function_op : out std_logic_vector(5 downto 0);
@@ -72,7 +72,7 @@ begin
         regWrite => reg_write,
         read_reg1 => instruction(25 downto 21),
         read_reg2 => instruction(20 downto 16),
-        write_reg => reg_dst_address,
+        write_reg => reg_write_back,
         write_data => write_data,
         read_data1 => read_data1,
         read_data2 => read_data2,

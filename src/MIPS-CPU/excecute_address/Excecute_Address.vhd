@@ -13,7 +13,7 @@ entity Excecute_Address is
         alu_shamt : in std_logic_vector(4 downto 0);
         register_target, register_destination : in std_logic_vector(4 downto 0);
         pc_src_selector : out std_logic;
-        reg_dst_address : out std_logic_vector(4 downto 0);
+        reg_write_back : out std_logic_vector(4 downto 0);
         pc_from_branch, alu_result : out std_logic_vector(31 downto 0);
         alu_zero : out std_logic
     );
@@ -74,7 +74,7 @@ begin
         input0 => register_target,
         input1 => register_destination,
         selector => reg_dst,
-        mux_out => reg_dst_address
+        mux_out => reg_write_back
     ); 
 
     alu_component : AlUComponent generic map(p => 2, c=>6, n=>32)
