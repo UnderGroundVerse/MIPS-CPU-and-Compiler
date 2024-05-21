@@ -2,10 +2,10 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   16:57:14 05/20/2024
+-- Create Date:   20:58:07 05/21/2024
 -- Design Name:   
--- Module Name:   C:/Users/mo/Desktop/Mips4/Mips/mem_access_testreal.vhd
--- Project Name:  Mips
+-- Module Name:   C:/Users/mo/Desktop/Mips6/Mix/Memory_Access_Test.vhd
+-- Project Name:  Mix
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
@@ -32,47 +32,33 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY mem_access_testreal IS
-END mem_access_testreal;
+ENTITY Memory_Access_Test IS
+END Memory_Access_Test;
  
-ARCHITECTURE behavior OF mem_access_testreal IS 
+ARCHITECTURE behavior OF Memory_Access_Test IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
     COMPONENT Memory_Access
     PORT(
-         alu_zero : IN  std_logic;
-         branch : IN  std_logic;
-         jump : IN  std_logic;
          clk : IN  std_logic;
          mem_access_addr : IN  std_logic_vector(31 downto 0);
          mem_write_data : IN  std_logic_vector(31 downto 0);
          mem_write_en : IN  std_logic;
          mem_read : IN  std_logic;
-         ideal_pc : IN  std_logic_vector(31 downto 0);
-         pc_from_branch : IN  std_logic_vector(31 downto 0);
-         pc_from_jump : IN  std_logic_vector(31 downto 0);
-         pc : OUT  std_logic_vector(31 downto 0);
          mem_read_data : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
-   signal alu_zero : std_logic := '0';
-   signal branch : std_logic := '0';
-   signal jump : std_logic := '0';
    signal clk : std_logic := '0';
    signal mem_access_addr : std_logic_vector(31 downto 0) := (others => '0');
    signal mem_write_data : std_logic_vector(31 downto 0) := (others => '0');
    signal mem_write_en : std_logic := '0';
    signal mem_read : std_logic := '0';
-   signal ideal_pc : std_logic_vector(31 downto 0) := (others => '0');
-   signal pc_from_branch : std_logic_vector(31 downto 0) := (others => '0');
-   signal pc_from_jump : std_logic_vector(31 downto 0) := (others => '0');
 
  	--Outputs
-   signal pc : std_logic_vector(31 downto 0);
    signal mem_read_data : std_logic_vector(31 downto 0);
 
    -- Clock period definitions
@@ -82,18 +68,11 @@ BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: Memory_Access PORT MAP (
-          alu_zero => alu_zero,
-          branch => branch,
-          jump => jump,
           clk => clk,
           mem_access_addr => mem_access_addr,
           mem_write_data => mem_write_data,
           mem_write_en => mem_write_en,
           mem_read => mem_read,
-          ideal_pc => ideal_pc,
-          pc_from_branch => pc_from_branch,
-          pc_from_jump => pc_from_jump,
-          pc => pc,
           mem_read_data => mem_read_data
         );
 
@@ -111,54 +90,57 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-      wait for 100 ns;	
-
-      	branch<='1';
-		alu_zero<='1';
-		pc_from_branch<=X"F1212321";
-		ideal_pc<=X"AAd21123";
-		pc_from_jump<=X"A32121FF";
-		jump<='1';
-		 mem_access_addr <=(others =>'0');
-        mem_write_data <=(others =>'0');
-         mem_write_en <='0';
-         mem_read <='0';
-      wait for clk_period*10;
-		branch<='0';
-		alu_zero<='1';
-		pc_from_branch<=X"F1212321";
-		ideal_pc<=X"AAd21123";
-		pc_from_jump<=X"A32121FF";
-		jump<='0';
-		 mem_access_addr <=(others =>'0');
-        mem_write_data <=(others =>'0');
-         mem_write_en <='0';
-         mem_read <='0';
-      wait for clk_period*10;
-			branch<='0';
-		alu_zero<='0';
-		pc_from_branch<=X"F1212321";
-		ideal_pc<=X"AAd21123";
-		pc_from_jump<=X"A32121FF";
-		jump<='1';
-		 mem_access_addr <=(others =>'0');
-        mem_write_data <=(others =>'0');
-         mem_write_en <='0';
-         mem_read <='0';
-      wait for clk_period*10;
-		      	branch<='1';
-		alu_zero<='1';
-		pc_from_branch<=X"F1212321";
-		ideal_pc<=X"AAd21123";
-		pc_from_jump<=X"A32121FF";
-		jump<='0';
-		 mem_access_addr <=(others =>'0');
-        mem_write_data <=(others =>'0');
-         mem_write_en <='0';
-         mem_read <='0';
-      wait for clk_period*10;
-
-
+      wait for 50 ns;	
+		mem_access_addr<=X"00000001";
+		mem_write_data<=X"FFFFFFFF";
+		mem_write_en<='0';
+		mem_read<='0';
+      wait for clk_period*5;
+		mem_access_addr<=X"00000001";
+		mem_write_data<=X"FFFF0002";
+		mem_write_en<='1';
+		mem_read<='0';
+      wait for clk_period*5;
+		mem_access_addr<=X"00000001";
+		mem_write_data<=X"FFFF1000";
+		mem_write_en<='0';
+		mem_read<='1';
+		wait for clk_period*5;
+		mem_access_addr<=X"00000001";
+		mem_write_data<=X"FFFF1000";
+		mem_write_en<='1';
+		mem_read<='1';
+		wait for clk_period*5;
+		mem_access_addr<=X"00000002";
+		mem_write_data<=X"FFFF1000";
+		mem_write_en<='1';
+		mem_read<='0';
+		wait for clk_period*5;
+		mem_access_addr<=X"00000002";
+		mem_write_data<=X"FFFF1000";
+		mem_write_en<='0';
+		mem_read<='1';
+		wait for clk_period*5;
+		mem_access_addr<=X"00000001";
+		mem_write_data<=X"FFFF1000";
+		mem_write_en<='0';
+		mem_read<='1';
+		wait for clk_period*5;
+		mem_access_addr<=X"00000001";
+		mem_write_data<=X"FFFF1023";
+		mem_write_en<='1';
+		mem_read<='0';
+		wait for clk_period*5;
+		mem_access_addr<=X"00000001";
+		mem_write_data<=X"FFFF1023";
+		mem_write_en<='0';
+		mem_read<='0';
+		wait for clk_period*5;
+		mem_access_addr<=X"00000001";
+		mem_write_data<=X"FFFF1023";
+		mem_write_en<='0';
+		mem_read<='1';
+		wait for clk_period*5;
       -- insert stimulus here 
 
       wait;

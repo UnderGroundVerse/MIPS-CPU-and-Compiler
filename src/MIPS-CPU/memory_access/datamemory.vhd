@@ -12,27 +12,30 @@ entity Data_Memory_VHDL is
     mem_write_data  : in std_logic_vector(n - 1 downto 0);
     mem_write_en    : in std_logic;
     mem_read        : in std_logic;
-    mem_read_data   : out std_logic_vector(n - 1 downto 0)
+    mem_read_data   : out std_logic_vector(n - 1 downto 0):=(others=>'0')
   );
 end Data_Memory_VHDL;
 
 architecture Behavioral of Data_Memory_VHDL is
-  signal ram_addr : std_logic_vector(n - 1 downto 0);
-  type data_mem is array  (2**16 - 1 downto 0) of std_logic_vector(n - 1 downto 0);
-  signal RAM : data_mem :=(others => X"00000000") ;
+  signal ram_addr : std_logic_vector(n - 1 downto 0):= (others =>'0');
+  type data_mem is array  (0 to 2**16 - 1) of std_logic_vector(n - 1 downto 0);
+  signal RAM : data_mem :=(others => X"00000000");
 begin
-
-  ram_addr <= mem_access_addr;
-
+  ram_addr <= mem_access_addr;  
   process(clk)
   begin
     if rising_edge(clk) then
-      if mem_write_en = '1' then
-        RAM(to_integer(unsigned(ram_addr))) <= mem_write_data;
+      if ((mem_write_en = '1') and (mem_read = '0')) then
+        RAM(to_integer(unsigned(ram_addr))) <=  mem_write_data;
+		  mem_read_data <= X"00000000";
+		elsif ((mem_write_en= '0') and (mem_read = '1')) then
+		  mem_read_data <= RAM(to_integer(unsigned(ram_addr))) ;
+		else
+		  mem_read_data <= X"00000000";
       end if;
     end if;
   end process;
 
-  mem_read_data <= RAM(to_integer(unsigned(ram_addr))) when mem_read = '1' else (others => '0');
+
 
 end Behavioral;

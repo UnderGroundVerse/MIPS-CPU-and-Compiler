@@ -38,7 +38,7 @@ entity Memory_Access is
 	port
 	(
     
-	  clk             : in std_logic;
+	 clk             : in std_logic;
     mem_access_addr : in std_logic_vector( n - 1 downto 0);
     mem_write_data  : in std_logic_vector( n - 1 downto 0);
     mem_write_en    : in std_logic;
