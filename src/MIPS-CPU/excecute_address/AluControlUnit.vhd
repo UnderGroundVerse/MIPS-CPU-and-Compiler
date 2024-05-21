@@ -48,9 +48,8 @@ architecture Behavioral of AluControlUnit is
 signal alu_code : std_logic_vector (3 downto 0) := (others =>'0');
 begin
 
-process(clk)
+process(alu_op, function_op)
 begin
-if(rising_edge(clk)) then
 	if(alu_op = "10") --(R Type)
 		then 
 		case function_op is
@@ -87,11 +86,11 @@ if(rising_edge(clk)) then
 			when others => 
 				
 				end case;
-				alu_control_out<=alu_code;
 				
 	end if;
-end if;
 end process;
+
+alu_control_out<=alu_code;
 
 end Behavioral;
 
