@@ -12,7 +12,6 @@ entity Instruction_Fetch is
 		clk : in std_logic;
 		jump : in std_logic;
 		pc_src_selector : in std_logic;
-        pc_from_jump : in std_logic_vector(31 downto 0);
 	    pc_from_branch  : in std_logic_vector(31 downto 0);
 		pc_out          : out std_logic_vector(31 downto 0);
         instruction_out : out std_logic_vector(31 downto 0)
@@ -63,8 +62,13 @@ signal pc_from_pcsrc1 : std_logic_vector (31 downto 0) :=(others =>'0') ;
 signal pc_4 : std_logic_vector (31 downto 0) :=(others =>'0') ;
 signal pc_in : std_logic_vector (31 downto 0) :=(others =>'0') ;
 signal pc_temp : std_logic_vector (31 downto 0);
+signal pc_from_jump : std_logic_vector(31 downto 0) := X"00000000";
+signal instruction_temp : std_logic_vector(31 downto 0) := X"00000000";
 
 begin
+    instruction_out <= instruction_temp;
+
+    pc_from_jump <= pc_4(31 downto 28) & instruction_temp(25 downto 0) & "00";
 
     pc_src_branch_mux : Mux2x1 generic map (n=>32)
         port map(
@@ -98,9 +102,9 @@ begin
     instruction_memory : Instruction_Memory_VHDL generic map ( n => 32)
     port map(
         pc => pc_in,
-        instruction => instruction_out  
+        instruction => instruction_temp  
     );
 
     pc_out <= pc_4;
-    
+
 end Behavioral;
