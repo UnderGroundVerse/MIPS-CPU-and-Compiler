@@ -63,7 +63,8 @@ begin
 			if(regWrite = '1')
 				then
 					reg_array(to_integer(unsigned(write_reg))) <= write_data;
-			
+					read_data1_temp<= reg_array(to_integer(unsigned(read_reg1)));	
+					read_data2_temp<= reg_array(to_integer(unsigned(read_reg2)));
 			elsif(regWrite ='0') 
 				then
 		read_data1_temp<= reg_array(to_integer(unsigned(read_reg1)));	
