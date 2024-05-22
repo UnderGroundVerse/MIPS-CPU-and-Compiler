@@ -48,19 +48,24 @@ architecture Behavioral of MEM_WB_PIPE is
 
 
 
-component Data_Memory_VHDL is
-  generic (
-    n : integer := 32  -- Number of bits for address
-  );
-  port (
-    clk             : in std_logic;
-    mem_access_addr : in std_logic_vector( n- 1 downto 0);
-    mem_write_data  : in std_logic_vector(n - 1 downto 0);
+component Memory_Access is
+
+	generic 
+	(	
+		n: integer := 32
+	);
+	port
+	(
+    
+	 clk             : in std_logic;
+    mem_access_addr : in std_logic_vector( n - 1 downto 0);
+    mem_write_data  : in std_logic_vector( n - 1 downto 0);
     mem_write_en    : in std_logic;
     mem_read        : in std_logic;
-    mem_read_data   : out std_logic_vector(n - 1 downto 0):=(others=>'0')
+    mem_read_data   : out std_logic_vector(n- 1 downto 0)
   );
 end component;
+
 
 
 component MEM_WB is
@@ -100,7 +105,7 @@ temp : MEM_WB port map (
 
 
 
-data_memory : Data_Memory_VHDL generic map (n=>32)
+data_memory : Memory_Access generic map (n=>32)
 	port map (
 		clk=>clk,
 		mem_access_addr=>alu_result,
