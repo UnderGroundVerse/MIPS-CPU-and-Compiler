@@ -101,7 +101,7 @@ begin
 
     instruction_memory : Instruction_Memory_VHDL generic map ( n => 32)
     port map(
-        pc => pc_in,
+        pc => pc_temp,
         instruction => instruction_temp  
     );
 
