@@ -78,6 +78,8 @@ end component;
 		port(
         mem_read, mem_to_reg, mem_write : in std_logic;
 		  reg_write  : in std_logic ;
+		  pc_from_branch : in std_logic_vector   (31 downto 0);
+		  pc_src_selector : in std_logic;
 		  reg_write_back : in std_logic_vector (4 downto 0);
         alu_result : in std_logic_vector(31 downto 0);
         read_data2 : in std_logic_vector(31 downto 0);
@@ -85,6 +87,8 @@ end component;
         mem_read_out, mem_to_reg_out, mem_write_out : out std_logic;
         alu_result_out : out std_logic_vector(31 downto 0);
 		  reg_write_out  : out std_logic;
+		  pc_from_branch_out : out std_logic_vector   (31 downto 0);
+		  pc_src_selector_out: out std_logic;
 		  reg_write_back_out : out std_logic_vector (4 downto 0);
         read_data2_out : out std_logic_vector(31 downto 0)
     );
@@ -92,6 +96,8 @@ end component;
 
 	signal reg_write_back_temp : std_logic_vector (4 downto 0);
 	signal alu_result_temp  : std_logic_vector (31 downto 0);
+	signal pc_from_branch_temp : std_logic_vector (31 downto 0);
+	signal pc_src_selector_temp   : std_logic;
 begin
 
 temp : EX_MEM port map (
@@ -109,7 +115,12 @@ temp : EX_MEM port map (
 		 alu_result_out=>alu_result_out,
 		 reg_write_out=>reg_write_out,
 		 reg_write_back_out=>reg_write_back,
-		 read_data2_out=>read_data_2_out
+		 read_data2_out=>read_data_2_out,
+		 pc_from_branch=>pc_from_branch_temp,
+		 pc_src_selector=>pc_src_selector_temp,
+		 pc_from_branch_out=>pc_from_branch,
+		 pc_src_selector_out=>pc_src_selector
+		 
 );
 
 
@@ -127,10 +138,10 @@ execute_address : Excecute_Address port map (
 		alu_shamt=>alu_shamt,
 		register_target=>reg_target,
 		register_destination=>reg_destination,
-		pc_src_selector=>pc_src_selector,
+		pc_src_selector=>pc_src_selector_temp,
 		reg_write_back=>reg_write_back_temp,
-		pc_from_branch=>pc_from_branch,
-		alu_result=>alu_result_temp		
+		pc_from_branch=>pc_from_branch_temp,
+		alu_result=>alu_result_temp
 );
 
 end Behavioral;
