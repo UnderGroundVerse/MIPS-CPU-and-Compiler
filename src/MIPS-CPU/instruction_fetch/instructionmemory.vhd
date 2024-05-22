@@ -51,7 +51,7 @@ architecture Behavioral of Instruction_Memory_VHDL is
     );
 begin
 
-	 instruction <= rom_data(to_integer(unsigned(pc)) ) & rom_data(to_integer(unsigned(pc))+1) & rom_data(to_integer(unsigned(pc))+2 ) & rom_data(to_integer(unsigned(pc))+3) ;
+	 instruction <=  rom_data(to_integer(unsigned(pc))+3)  & rom_data(to_integer(unsigned(pc))+2 ) & rom_data(to_integer(unsigned(pc))+1) & rom_data(to_integer(unsigned(pc)) ) ;
 
 
 end Behavioral;
