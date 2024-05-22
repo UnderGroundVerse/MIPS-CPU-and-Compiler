@@ -212,7 +212,7 @@ begin
         mem_to_reg => mem_to_reg,
         mem_write => mem_write,
         alu_src => alu_src,
-        reg_write => reg_write_out_temp4,
+        reg_write => reg_write,
         alu_op => alu_op,
         pc_plus4 => pc_plus4_out_temp1,
         instruction => instruction_out_temp1,

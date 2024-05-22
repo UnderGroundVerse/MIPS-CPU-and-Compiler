@@ -44,12 +44,16 @@ architecture Behavioral of Decode_Pipeline is
             pc_plus4 : in std_logic_vector(31 downto 0);
             read_data1, read_data2 : in std_logic_vector(31 downto 0);
             extended_sign : in std_logic_vector(31 downto 0);
+            register_target, register_destination : in std_logic_vector(4 downto 0);
+            function_op : in std_logic_vector(5 downto 0); 
             clk : in std_logic;
             reg_dst_out, jump_out, branch_out, mem_read_out, mem_to_reg_out, mem_write_out, alu_src_out, reg_write_out : out std_logic;
             alu_op_out : out std_logic_vector(1 downto 0);
             pc_plus4_out : out std_logic_vector(31 downto 0);
             read_data1_out, read_data2_out : out std_logic_vector(31 downto 0);
-            extended_sign_out : out std_logic_vector(31 downto 0)
+            extended_sign_out : out std_logic_vector(31 downto 0);
+            register_target_out, register_destination_out : out std_logic_vector(4 downto 0);
+            function_op_out : out std_logic_vector(5 downto 0)
         );
     end component;
 
@@ -68,9 +72,9 @@ begin
         read_data1 => read_data1_temp,
         read_data2 => read_data2_temp,
         extended_sign => extended_sign_temp,
-        function_op => function_op_out,
-        register_target => register_target_out,
-        register_destination => register_destination_out 
+        function_op => function_op_temp,
+        register_target => register_target_temp,
+        register_destination => register_destination_temp
     );
 
     temp : ID_EX port map(
@@ -88,6 +92,9 @@ begin
         read_data1 => read_data1_temp,
         read_data2 => read_data2_temp,
         extended_sign => extended_sign_temp,
+        register_target => register_target_temp,
+        register_destination => register_destination_temp,
+        function_op => function_op_temp,
 
         reg_dst_out => reg_dst_out,
         jump_out => jump_out,
@@ -101,6 +108,9 @@ begin
         pc_plus4_out => pc_plus4_out,
         read_data1_out => read_data1_out,
         read_data2_out => read_data2_out,
-        extended_sign_out => extended_sign_out
+        extended_sign_out => extended_sign_out,
+        register_target_out => register_target_out,
+        register_destination_out => register_destination_out,
+        function_op_out => function_op_out
     );
 end Behavioral;

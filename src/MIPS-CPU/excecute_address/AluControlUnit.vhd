@@ -50,6 +50,7 @@ begin
 
 process(alu_op, function_op)
 begin
+
 	if(alu_op = "10") --(R Type)
 		then 
 		case function_op is
@@ -86,6 +87,7 @@ begin
 			when others => 
 				
 				end case;
+
 				
 	end if;
 end process;

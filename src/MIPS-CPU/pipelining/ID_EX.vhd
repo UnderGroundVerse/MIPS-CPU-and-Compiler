@@ -11,12 +11,16 @@ Entity ID_EX is
         pc_plus4 : in std_logic_vector(31 downto 0);
         read_data1, read_data2 : in std_logic_vector(31 downto 0);
         extended_sign : in std_logic_vector(31 downto 0);
+        register_target, register_destination : in std_logic_vector(4 downto 0);
+        function_op : in std_logic_vector(5 downto 0);
         clk : in std_logic;
         reg_dst_out, jump_out, branch_out, mem_read_out, mem_to_reg_out, mem_write_out, alu_src_out, reg_write_out : out std_logic;
         alu_op_out : out std_logic_vector(1 downto 0);
         pc_plus4_out : out std_logic_vector(31 downto 0);
         read_data1_out, read_data2_out : out std_logic_vector(31 downto 0);
-        extended_sign_out : out std_logic_vector(31 downto 0)
+        extended_sign_out : out std_logic_vector(31 downto 0);
+        register_target_out, register_destination_out : out std_logic_vector(4 downto 0);
+        function_op_out : out std_logic_vector(5 downto 0)
     );
 end ID_EX;
 
@@ -42,6 +46,10 @@ begin
             read_data2_out <= read_data2;
 
             extended_sign_out <= extended_sign;
+
+            register_target_out <= register_target;
+            register_destination_out <= register_destination;
+            function_op_out <= function_op;
         end if;
     end process;
 end Behavioral;
