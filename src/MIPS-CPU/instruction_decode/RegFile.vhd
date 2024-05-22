@@ -72,7 +72,7 @@ begin
 	end if;	
 end if;	
 end process;
-read_data1 <= read_data1_temp;
-read_data2 <= read_data2_temp;
+read_data1 <= X"00000000" when read_reg_1 = "00000" else read_data1_temp;
+read_data2 <= X"00000000" when read_reg_2 = "00000" else read_data2_temp;
 end Behavioral;
 
