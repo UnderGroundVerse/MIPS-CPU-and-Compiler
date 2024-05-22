@@ -6,7 +6,7 @@ use ieee.numeric_std.all;
 
 entity Instruction_Decode is
     port(
-        clk, rst, reg_write: in std_logic;
+        clk, reg_write: in std_logic;
         pc : in std_logic_vector(31 downto 0);
         instruction : in std_logic_vector(31 downto 0);
         write_data : in std_logic_vector(31 downto 0);
@@ -29,7 +29,7 @@ architecture Behavioral of Instruction_Decode is
         write_data :in std_logic_vector (31 downto 0); --The data to be written on
         read_data1 :out std_logic_vector (31 downto 0); --The data of 1'st reg to be sent to ALU
         read_data2 : out std_logic_vector (31 downto 0); --The data of 2'nd reg to be sent to ALU
-        clk,rst : in std_logic
+        clk: in std_logic
         );
     end component;
 
@@ -76,8 +76,7 @@ begin
         write_data => write_data,
         read_data1 => read_data1,
         read_data2 => read_data2,
-        clk => clk,
-        rst => rst
+        clk => clk
     );
 
 end Behavioral;

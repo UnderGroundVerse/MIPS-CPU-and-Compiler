@@ -6,7 +6,6 @@ use IEEE.numeric_std.all;
 entity Decode_Pipeline is
     port(
         clk : in std_logic;
-        rst : in std_logic;
         reg_dst, jump, branch, mem_read, mem_to_reg, mem_write, alu_src, reg_write : in std_logic;
         alu_op : in std_logic_vector(1 downto 0);
         pc_plus4 : in std_logic_vector(31 downto 0);
@@ -27,7 +26,7 @@ end Decode_Pipeline;
 architecture Behavioral of Decode_Pipeline is
     component Instruction_Decode is
         port(
-            clk, rst, reg_write: in std_logic;
+            clk, reg_write: in std_logic;
             pc : in std_logic_vector(31 downto 0);
             instruction : in std_logic_vector(31 downto 0);
             write_data : in std_logic_vector(31 downto 0);
@@ -61,7 +60,6 @@ architecture Behavioral of Decode_Pipeline is
 begin
     inst_decode : Instruction_Decode port map(
         clk => clk,
-        rst => rst,
         reg_write => reg_write,
         pc => pc_plus4,
         instruction => instruction,

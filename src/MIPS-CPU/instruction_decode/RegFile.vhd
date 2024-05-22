@@ -40,7 +40,7 @@ write_reg : in std_logic_vector (4 downto 0); --address of reg inside array to b
 write_data :in std_logic_vector (31 downto 0); --The data to be written on
 read_data1 :out std_logic_vector (31 downto 0); --The data of 1'st reg to be sent to ALU
 read_data2 : out std_logic_vector (31 downto 0); --The data of 2'nd reg to be sent to ALU
-clk,rst : in std_logic
+clk: in std_logic
 );
 end RegFile;
 
@@ -52,13 +52,9 @@ signal read_data2_temp : std_logic_vector(31 downto 0) := X"00000000";
 
 begin
 
-process(clk,rst)
-begin
-	if(rst='1') 
-		 then
-		reg_array <= (others => X"00000000");
-		
-	elsif(rising_edge(clk))
+process(clk)
+begin	
+	if(rising_edge(clk))
 		then
 			if(regWrite = '1')
 				then
