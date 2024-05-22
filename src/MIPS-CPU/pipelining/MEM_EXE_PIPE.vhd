@@ -133,11 +133,5 @@ execute_address : Excecute_Address port map (
 		alu_result=>alu_result_temp		
 );
 
-
-
-
-
-
-
 end Behavioral;
 
