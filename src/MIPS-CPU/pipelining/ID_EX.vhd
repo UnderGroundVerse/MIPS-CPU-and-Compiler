@@ -6,12 +6,14 @@ use IEEE.numeric_std.all;
  
 Entity ID_EX is 
     port(
-        reg_dst, jump, branch, mem_read, mem_to_reg, alu_op, mem_write, alu_src, reg_write : in std_logic;
+        reg_dst, jump, branch, mem_read, mem_to_reg, mem_write, alu_src, reg_write : in std_logic;
+        alu_op : in std_logic_vector(1 downto 0);
         pc_plus4 : in std_logic_vector(31 downto 0);
         read_data1, read_data2 : in std_logic_vector(31 downto 0);
         extended_sign : in std_logic_vector(31 downto 0);
         clk : in std_logic;
-        reg_dst_out, jump_out, branch_out, mem_read_out, mem_to_reg_out, alu_op_out, mem_write_out, alu_src_out, reg_write_out : out std_logic;
+        reg_dst_out, jump_out, branch_out, mem_read_out, mem_to_reg_out, mem_write_out, alu_src_out, reg_write_out : out std_logic;
+        alu_op_out : out std_logic_vector(1 downto 0);
         pc_plus4_out : out std_logic_vector(31 downto 0);
         read_data1_out, read_data2_out : out std_logic_vector(31 downto 0);
         extended_sign_out : out std_logic_vector(31 downto 0)
