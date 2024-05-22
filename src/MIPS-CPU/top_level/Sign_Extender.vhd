@@ -37,7 +37,7 @@ entity Sign_Extender is
 end Sign_Extender;
 
 architecture Behavioral of Sign_Extender is
-signal bits_holder : std_logic_vector (15 downto 0);
+signal bits_holder : std_logic_vector (15 downto 0) := (others => '0');
 begin
 
 process(clk)
