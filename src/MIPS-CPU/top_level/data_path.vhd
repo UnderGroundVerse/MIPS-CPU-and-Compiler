@@ -36,7 +36,7 @@ entity Data_Path is
         reg_write_back_out_4 : out std_logic_vector (4 downto 0);
         read_data_4 :  out std_logic_vector (31 downto 0);
 
-        write_data_out : out std_logic_vector(31 downto 0)
+        write_data_out_5 : out std_logic_vector(31 downto 0)
     );
 end Data_Path;
 
@@ -191,7 +191,7 @@ begin
     reg_write_back_out_4 <= reg_write_back_out_temp4;
     read_data_4 <= read_data_temp4;
 
-
+    write_data_out_5 <= write_data_out_temp5;
 
 
     fetch_pipe : Fetch_Pipeline port map(
