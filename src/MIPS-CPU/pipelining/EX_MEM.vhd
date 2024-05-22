@@ -9,11 +9,15 @@ entity EX_MEM is
 		  reg_write  : in std_logic ;
 		  reg_write_back : in std_logic_vector (4 downto 0);
         alu_result : in std_logic_vector(31 downto 0);
+		  pc_from_branch : in std_logic_vector   (31 downto 0);
+		  pc_src_selector : in std_logic;
         read_data2 : in std_logic_vector(31 downto 0);
         clk : in std_logic;
         mem_read_out, mem_to_reg_out, mem_write_out : out std_logic;
         alu_result_out : out std_logic_vector(31 downto 0);
 		  reg_write_out  : out std_logic;
+		  pc_from_branch_out : out std_logic_vector   (31 downto 0);
+		  pc_src_selector_out: out std_logic;
 		  reg_write_back_out : out std_logic_vector (4 downto 0);
         read_data2_out : out std_logic_vector(31 downto 0)
     );
@@ -31,6 +35,8 @@ begin
 				reg_write_back_out <= reg_write_back;
             alu_result_out <= alu_result;
             read_data2_out <= read_data2;
+				pc_from_branch_out <= pc_from_branch;
+				pc_src_selector_out <= pc_src_selector;
         end if;
     end process;
 end Behavioral;
