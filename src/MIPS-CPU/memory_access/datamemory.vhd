@@ -19,7 +19,7 @@ end Data_Memory_VHDL;
 architecture Behavioral of Data_Memory_VHDL is
   signal ram_addr : std_logic_vector(n - 1 downto 0);
   type data_mem is array  (0 to 2**16 - 1) of std_logic_vector(n - 1 downto 0);
-  signal RAM : data_mem :=(others => X"00000000");
+  signal RAM : data_mem ;
 begin
   ram_addr <= mem_access_addr;  
   process(clk)
@@ -32,7 +32,7 @@ begin
 		  mem_read_data <= RAM(to_integer(unsigned(ram_addr))) ;
 		else
 		  mem_read_data <= X"00000000";
-      end if;
+    end if;
     end if;
   end process;
 

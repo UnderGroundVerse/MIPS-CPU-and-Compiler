@@ -60,7 +60,7 @@ signal lo : std_logic_vector (n-1 downto 0);
 
 begin
 
-process (alu_control_in, operand1, operand2)--(clk)
+process(alu_control_in, operand1, operand2)
 
 begin
 -- if (rising_edge(clk)) 

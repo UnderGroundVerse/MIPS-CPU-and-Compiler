@@ -67,7 +67,7 @@ begin
 			when others => 				
 				alu_code<="1111";
 				end case;
-				alu_control_out<=alu_code;
+				-- alu_control_out<=alu_code;
 	elsif (alu_op /= "10") --(I-Type)
 	then
 		case alu_op is
@@ -80,8 +80,10 @@ begin
 			when "10" => --bun
 				alu_code<="0111";	
 			when "11" => --inp
-				alu_code<="0101";					
-				end case;
+				alu_code<="0101";
+			when others => 	
+								
+			end case;
 
 				
 	end if;

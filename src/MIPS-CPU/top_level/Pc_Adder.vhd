@@ -37,14 +37,14 @@ entity Pc_Adder is
 	 generic ( n: integer :=32
 	 );
 	 
-    Port ( pc_in : in  STD_LOGIC_VECTOR (n-1 downto 0);
-           pc_out : out  STD_LOGIC_VECTOR (n-1 downto 0));
+    Port ( pc_in : in  STD_LOGIC_VECTOR (31 downto 0);
+           pc_out : out  STD_LOGIC_VECTOR (31 downto 0));
 end Pc_Adder;
 
 architecture Behavioral of Pc_Adder is
 
 begin
-pc_out<=pc_in + 4;
+pc_out<=std_logic_vector(unsigned(pc_in) + X"00000004");
 
 end Behavioral;
 

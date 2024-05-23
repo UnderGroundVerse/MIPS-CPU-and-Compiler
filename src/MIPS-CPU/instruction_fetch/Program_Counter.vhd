@@ -20,9 +20,9 @@ architecture Behavioral of Program_Counter is
 begin
     process(clk)
     begin
-        pc_out <= pc_temp;
-        if(falling_edge(clk)) then
-            pc_out <= pc_in;
+        if(rising_edge(clk)) then
+            pc_temp <= pc_in;
         end if;
     end process;
+    pc_out <= pc_temp;
 end Behavioral;

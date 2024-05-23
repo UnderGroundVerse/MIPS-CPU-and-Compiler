@@ -56,7 +56,7 @@ begin
  case opcode is
   when "000000" => --(R type)
     reg_dst <= '1'; --taking destintion reg as r type
-    mem_to_reg <= '0';
+    mem_to_reg <= '1';
     alu_op <= "10";
     jump <= '0';
     branch <= '0';
@@ -80,7 +80,7 @@ begin
 	 
 	 when "001000" => --addi (I type)
     reg_dst <= '0'; --taking destintion reg as i type
-    mem_to_reg <= '0';
+    mem_to_reg <= '1';
     alu_op <= "00";
     jump <= '0';
     branch <= '0';
