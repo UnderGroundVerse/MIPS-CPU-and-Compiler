@@ -54,7 +54,7 @@ begin
 	if(alu_op = "10") --(R Type)
 		then 
 		case function_op is
-			when "100000" =>  --add
+			when "100000" =>  --add,moveRtoR
 				alu_code<="0010";
 			when "100010" =>   --subtract
 				alu_code<="0110";
@@ -64,12 +64,6 @@ begin
 				alu_code<="0000"; 		
 			when "011000" => --mul
 				alu_code<="1000";
-			when "011010" => --div
-				alu_code<="1010";
-			when "000000" => --sll
-				alu_code<="1011";
-			when "000011" => --shr
-				alu_code<="1001";
 			when others => 				
 				alu_code<="1111";
 				end case;
@@ -77,7 +71,7 @@ begin
 	elsif (alu_op /= "10") --(I-Type)
 	then
 		case alu_op is
-			when "00" =>  --addi , moveMtoR , moveRtoM , moveRtoR
+			when "00" =>  --addi , moveMtoR , moveRtoM 
 				alu_code<="0010";
 			when "01" => --skip
 				alu_code<="0011";

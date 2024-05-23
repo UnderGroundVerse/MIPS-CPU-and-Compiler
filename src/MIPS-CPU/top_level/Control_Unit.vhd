@@ -103,28 +103,7 @@ begin
    alu_src <= '1';
    reg_write <= '1';
 	
-	when "100001" => -- skp
-	reg_dst <= '-'; 
-	alu_src <= '-';
-   mem_to_reg <= '-';
-	reg_write <= '0';
-	mem_read <= '0';
-	mem_write <= '0';
-	branch <= '1';
-   alu_op <= "00"; 
-   jump <= '0';
   
-  
-  when "011101" => --move register value to register
-  reg_dst <= '0';
-   mem_to_reg <= '0';
-   alu_op <= "00";
-   jump <= '0';
-   branch <= '0';
-   mem_read <= '0';
-   mem_write <= '0';
-   alu_src <= '1';
-   reg_write <= '1';
   
   when "101011" => -- SW(move register value to memory)
    reg_dst <= '-'; 
@@ -145,6 +124,17 @@ begin
 	 mem_read <= '0';
 	  mem_write <= '0';
 	   branch <= '1';
+   alu_op <= "01"; 
+   jump <= '0';
+	
+		when "100001" => -- skp
+	reg_dst <= '-'; 
+	alu_src <= '-';
+   mem_to_reg <= '-';
+	reg_write <= '0';
+	mem_read <= '0';
+	mem_write <= '0';
+	branch <= '1';
    alu_op <= "01"; 
    jump <= '0';
 	

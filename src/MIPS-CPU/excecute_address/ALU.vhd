@@ -81,8 +81,8 @@ begin
 			hi<=mul(63 downto 32);
 			result<=lo;	
 	
-		when "0101" =>   --inp
-			result <= operand1;
+	--	when "0101" =>   --inp
+	--		result <= operand1;
 		when "0111" =>   --bun
 			alu_zero_temp<='1';
 		when others =>
@@ -91,7 +91,7 @@ begin
 		if((alu_control_in="0110") and (result = (X"00000000"))) then --beq
 			alu_zero_temp<='1';
 		end if;
-		if((alu_control_in="1100") and (operand1(31) = '0')) then --skip
+		if((alu_control_in="0011") and (operand1(31) = '0')) then --skip
 			alu_zero_temp<='1';
 		end if;	
 		
