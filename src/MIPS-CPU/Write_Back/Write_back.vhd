@@ -60,8 +60,8 @@ begin
 mem_to_reg_mux : Mux2x1 generic map (n=>32)
 
 port map(
-input0=>alu_result,
-input1=>mem_read_data,
+input0=>mem_read_data,
+input1=>alu_result,
 selector=>mem_to_reg,
 mux_out=>write_data
 );

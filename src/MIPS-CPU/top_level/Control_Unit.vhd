@@ -51,7 +51,7 @@ begin
 process(clk)
 begin
 
- if( rising_edge(clk))
+ if(falling_edge(clk))
  then
  case opcode is
   when "000000" => --(R type)

@@ -69,7 +69,7 @@ component Excecute_Address is
         pc_src_selector : out std_logic;
         reg_write_back : out std_logic_vector(4 downto 0);
         pc_from_branch, alu_result : out std_logic_vector(31 downto 0)
-    
+
     );
 end component;
 
@@ -84,6 +84,7 @@ end component;
         alu_result : in std_logic_vector(31 downto 0);
         read_data2 : in std_logic_vector(31 downto 0);
         clk : in std_logic;
+
         mem_read_out, mem_to_reg_out, mem_write_out : out std_logic;
         alu_result_out : out std_logic_vector(31 downto 0);
 		  reg_write_out  : out std_logic;
@@ -91,35 +92,39 @@ end component;
 		  pc_src_selector_out: out std_logic;
 		  reg_write_back_out : out std_logic_vector (4 downto 0);
         read_data2_out : out std_logic_vector(31 downto 0)
-    );
+		);
 end component;
 
 	signal reg_write_back_temp : std_logic_vector (4 downto 0);
 	signal alu_result_temp  : std_logic_vector (31 downto 0);
 	signal pc_from_branch_temp : std_logic_vector (31 downto 0);
 	signal pc_src_selector_temp   : std_logic;
+
+	signal register_destination_temp, register_target_temp : std_logic_vector(4 downto 0);
+
 begin
 
 temp : EX_MEM port map (
-		 clk=>clk,
-		 mem_read=>mem_read,
-		 mem_to_reg=>mem_to_reg,
-		 mem_write=>mem_write,
-		 reg_write=>reg_write,
-		 reg_write_back=>reg_write_back_temp,
-		 alu_result=>alu_result_temp,
-		 read_data2=>read_data_2,
-		 mem_read_out=>mem_read_out,
-		 mem_to_reg_out=>mem_to_reg_out,
-		 mem_write_out=>mem_write_out,
-		 alu_result_out=>alu_result_out,
-		 reg_write_out=>reg_write_out,
-		 reg_write_back_out=>reg_write_back,
-		 read_data2_out=>read_data_2_out,
-		 pc_from_branch=>pc_from_branch_temp,
-		 pc_src_selector=>pc_src_selector_temp,
-		 pc_from_branch_out=>pc_from_branch,
-		 pc_src_selector_out=>pc_src_selector
+		clk=>clk,
+		mem_read=>mem_read,
+		mem_to_reg=>mem_to_reg,
+		mem_write=>mem_write,
+		reg_write=>reg_write,
+		reg_write_back=>reg_write_back_temp,
+		alu_result=>alu_result_temp,
+		read_data2=>read_data_2,
+
+		mem_read_out=>mem_read_out,
+		mem_to_reg_out=>mem_to_reg_out,
+		mem_write_out=>mem_write_out,
+		alu_result_out=>alu_result_out,
+		reg_write_out=>reg_write_out,
+		reg_write_back_out=>reg_write_back,
+		read_data2_out=>read_data_2_out,
+		pc_from_branch=>pc_from_branch_temp,
+		pc_src_selector=>pc_src_selector_temp,
+		pc_from_branch_out=>pc_from_branch,
+		pc_src_selector_out=>pc_src_selector
 		 
 );
 
