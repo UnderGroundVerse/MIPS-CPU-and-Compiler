@@ -70,7 +70,6 @@ begin
 				alu_code<="1011";
 			when "000011" => --shr
 				alu_code<="1001";
-				
 			when others => 				
 				alu_code<="1111";
 				end case;
@@ -78,14 +77,16 @@ begin
 	elsif (alu_op /= "10") --(I-Type)
 	then
 		case alu_op is
-			when "00" => --addi
+			when "00" =>  --addi , moveMtoR , moveRtoM , moveRtoR
 				alu_code<="0010";
-			when "11" => --ori
-				alu_code<="0001";
-			when "01" => --beq(subtract)
-				alu_code<="0110";
-			when others => 
-				
+			when "01" => --skip
+				alu_code<="0011";
+		 --when "01" => --beq(subtract)
+		--		alu_code<="0110";
+			when "10" => --bun
+				alu_code<="0111";	
+			when "11" => --inp
+				alu_code<="0101";					
 				end case;
 
 				

@@ -75,17 +75,25 @@ begin
 			result<= operand1 or operand2;
 		when "0000" =>
 			result<= operand1 and operand2;
-		when "1000" =>
+		when "1000" => 
 			mul<= operand1 * operand2;
 			lo<=mul(31 downto 0);
 			hi<=mul(63 downto 32);
 			result<=lo;	
+	
+		when "0101" =>   --inp
+			result <= operand1;
+		when "0111" =>   --bun
+			alu_zero_temp<='1';
 		when others =>
 			result <= (others => '0');
 		end case;
-		if((alu_control_in="0110") and (result = (X"00000000"))) then
+		if((alu_control_in="0110") and (result = (X"00000000"))) then --beq
 			alu_zero_temp<='1';
 		end if;
+		if((alu_control_in="1100") and (operand1(31) = '0')) then --skip
+			alu_zero_temp<='1';
+		end if;	
 		
 	-- end if;
 		end process;

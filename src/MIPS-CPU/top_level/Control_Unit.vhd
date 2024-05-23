@@ -67,6 +67,17 @@ begin
 	 
 
 	 
+	 when "001100" => --inp (I type)
+    reg_dst <= '0'; --taking destintion reg as i type
+    mem_to_reg <= '0';
+    alu_op <= "11";
+    jump <= '0';
+    branch <= '0';
+    mem_read <= '0';
+    mem_write <= '0';
+    alu_src <= '1';
+    reg_write <= '1';
+	 
 	 when "001000" => --addi (I type)
     reg_dst <= '0'; --taking destintion reg as i type
     mem_to_reg <= '0';
@@ -78,16 +89,6 @@ begin
     alu_src <= '1';
     reg_write <= '1';
 	 
-	 when "001101" => --ori (I type)
-    reg_dst <= '0'; --taking destintion reg as i type
-    mem_to_reg <= '0';
-    alu_op <= "11";
-    jump <= '0';
-    branch <= '0';
-    mem_read <= '0';
-    mem_write <= '0';
-    alu_src <= '1';
-    reg_write <= '1';
 	 
 	
 
@@ -101,8 +102,31 @@ begin
    mem_write <= '0';
    alu_src <= '1';
    reg_write <= '1';
+	
+	when "100001" => -- skp
+	reg_dst <= '-'; 
+	alu_src <= '-';
+   mem_to_reg <= '-';
+	reg_write <= '0';
+	mem_read <= '0';
+	mem_write <= '0';
+	branch <= '1';
+   alu_op <= "00"; 
+   jump <= '0';
   
-  when "101011" => -- SW
+  
+  when "011101" => --move register value to register
+  reg_dst <= '0';
+   mem_to_reg <= '0';
+   alu_op <= "00";
+   jump <= '0';
+   branch <= '0';
+   mem_read <= '0';
+   mem_write <= '0';
+   alu_src <= '1';
+   reg_write <= '1';
+  
+  when "101011" => -- SW(move register value to memory)
    reg_dst <= '-'; 
 	alu_src <= '1';
    mem_to_reg <= '-';
@@ -122,6 +146,17 @@ begin
 	  mem_write <= '0';
 	   branch <= '1';
    alu_op <= "01"; 
+   jump <= '0';
+	
+	when "000101" => -- bun
+   reg_dst <= '-'; 
+	alu_src <= '-';
+   mem_to_reg <= '-';
+	reg_write <= '0';
+	mem_read <= '0';
+	mem_write <= '0';
+	branch <= '1';
+   alu_op <= "10"; 
    jump <= '0';
   
   when "000010" => -- j
