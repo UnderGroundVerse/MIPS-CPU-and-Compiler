@@ -29,6 +29,7 @@ architecture Behavioral of Excecute_Address is
          
         port(
             alu_op : in std_logic_vector(p-1 downto 0);
+            alu_src : in std_logic;
             alu_zero : out std_logic;
             alu_out : out std_logic_vector (n-1 downto 0);
             function_op : in std_logic_vector(c-1 downto 0);
@@ -80,6 +81,7 @@ begin
     alu_component : AlUComponent generic map(p => 2, c=>6, n=>32)
     port map(
         alu_op => alu_op,
+        alu_src => alu_src,
         alu_zero => alu_zero_temp,
         alu_out => alu_result,
         function_op => function_op,

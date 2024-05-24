@@ -38,6 +38,7 @@ entity AluControlUnit is
  port(
  alu_control_out: out std_logic_vector(3 downto 0);
  function_op : in std_logic_vector(5 downto 0);
+ alu_src : in std_logic;
  alu_op: in std_logic_vector(1 downto 0);
  clk : in std_logic 
 );
@@ -81,7 +82,7 @@ begin
 				alu_code<="0111";	
 			when "11" => --inp
 				alu_code<="0101";
-			when others => 	
+			when others => 	null;
 								
 			end case;
 

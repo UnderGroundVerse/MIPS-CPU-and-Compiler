@@ -37,6 +37,7 @@ generic(
  
 port(
 	alu_op : in std_logic_vector(p-1 downto 0);
+	alu_src : in std_logic;
 	alu_zero : out std_logic;
 	alu_out : out std_logic_vector (n-1 downto 0);
 	function_op : in std_logic_vector(c-1 downto 0);
@@ -54,6 +55,7 @@ architecture Behavioral of AlUComponent is
 component ALU 
 PORT(
 	alu_control_in: in std_logic_vector(3 downto 0);
+	alu_src : in std_logic;
 	alu_out :out std_logic_vector (31 downto 0);
 	alu_zero : out std_logic;
 	alu_shamt:in std_logic_vector (4 downto 0) :=(others=>'0');
@@ -67,6 +69,7 @@ component AluControlUnit
 
 PORT(
  alu_control_out: out std_logic_vector(3 downto 0);
+ alu_src : in std_logic;
  function_op : in std_logic_vector(5 downto 0);
  alu_op: in std_logic_vector(1 downto 0);
  clk: in std_logic
@@ -80,11 +83,12 @@ begin
 
 p1: AluControlUnit port map(
 alu_control_out=>alu_c,
+alu_src => alu_src,
 function_op=>function_op,
 alu_op=>alu_op,
 clk=>clk	);
 
-p2: ALU port map(alu_control_in=>alu_c,
+p2: ALU port map(alu_control_in=>alu_c, alu_src => alu_src,
 alu_shamt=>alu_shamt,
 alu_out=>alu_out,
 operand1=>operand1,

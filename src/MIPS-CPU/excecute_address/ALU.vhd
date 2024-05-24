@@ -41,6 +41,7 @@ c: integer := 6
 
 port(
 	alu_control_in: in std_logic_vector(3 downto 0);
+	alu_src : in std_logic;
 	alu_out :out std_logic_vector (n-1 downto 0);
 	alu_zero:out std_logic;
 	operand1,operand2 :in std_logic_vector(n-1 downto 0);
@@ -59,12 +60,16 @@ signal hi : std_logic_vector (n-1 downto 0);
 signal lo : std_logic_vector (n-1 downto 0);
 
 begin
+	-- with alu_control_in select
+	-- result <= 	(operand1 + operand2) when "0010",
+	-- 			"0000" when others;
 
 process(alu_control_in, operand1, operand2)
 
 begin
 -- if (rising_edge(clk)) 
 -- 	then
+	
 	alu_zero_temp<='0';
 	case alu_control_in is
 		when "0010" => 
@@ -85,7 +90,7 @@ begin
 	--		result <= operand1;
 		when "0111" =>   --bun
 			alu_zero_temp<='1';
-		when others =>
+		when others => null;
 			
 		end case;
 		if((alu_control_in="0110") and (result = (X"00000000"))) then --beq
@@ -93,7 +98,8 @@ begin
 		end if;
 		if((alu_control_in="0011") and (operand1(31) = '0')) then --skip
 			alu_zero_temp<='1';
-		end if;	
+		end if;
+			
 		
 	-- end if;
 		end process;

@@ -50,23 +50,11 @@ end Control_Unit;
 architecture Behavioral of Control_Unit is
 
 begin
-process(opcode)
+process(clk)
 begin
 
-   reg_dst <= '1';
-   mem_to_reg <= '0';
-   alu_op <= "XX";
-   jump <= '0';
-   branch <= '0';
-   mem_read <= '0';
-   mem_write <= '0';
-   alu_src <= '0';
-   reg_write <= '1';
-
-
--- if(stall = '0') then
---  if(falling_edge(clk))
---  then
+ if(falling_edge(clk))
+ then
  case opcode is
   when "000000" => --(R type)
     reg_dst <= '1'; --taking destintion reg as r type
@@ -120,9 +108,9 @@ begin
   
   
   when "101011" => -- SW(move register value to memory)
-   reg_dst <= '-'; 
+   reg_dst <= '0'; 
 	alu_src <= '1';
-   mem_to_reg <= '-';
+   mem_to_reg <= '0';
 	 reg_write <= '0';
 	 mem_read <= '0';
 	  mem_write <= '1';
@@ -195,10 +183,19 @@ begin
    -- mem_write <= '0';
    -- alu_src <= '0';
    -- reg_write <= '1';
+   reg_dst <= '1';
+   mem_to_reg <= '0';
+   alu_op <= "XX";
+   jump <= '0';
+   branch <= '0';
+   mem_read <= '0';
+   mem_write <= '0';
+   alu_src <= '0';
+   reg_write <= '1';
    
  end case;
 --  end if;
---  end if;
+ end if;
 end process;
 
 

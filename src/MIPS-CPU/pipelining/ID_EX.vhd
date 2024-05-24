@@ -54,11 +54,11 @@ begin
             function_op_out <= function_op;
 
             if (stall = '1') then
-                -- alu_op_out <= (others => '0');
-                -- mem_write_out <= '0';
-                -- mem_read_out <= '0'; --check
+                alu_op_out <= (others => '0');
+                mem_write_out <= '0';
+                mem_read_out <= '0'; --check
                 reg_write_out <= '0';
-                -- reg_dst_out <= '1';
+                -- reg_dst_out <= '0';
                 -- jump_out <= '0';
                 -- branch_out <= '0';
                 mem_to_reg_out <= '0';
