@@ -125,8 +125,25 @@ component Data_Path is
 
         write_data_out_5 : out std_logic_vector(31 downto 0);
 
-        stall : in std_logic
+        stall : out std_logic
     );
+end component;
+
+component hazard_detection_unit is
+   port
+   (
+      reg_target_ID_EX, reg_destination_ID_EX, reg_source_IF_ID, reg_target_IF_ID, reg_write_back_EX_MEM : in std_logic_vector(4 downto 0);
+      
+      mem_to_reg_ID_EX, mem_to_reg_EX_MEM: in std_logic; 
+      
+      branch : in std_logic; 
+      
+      alu_src_ID, alu_src_ID_EX : in std_logic;
+      
+      reg_write_ID,reg_write_ID_EX : in std_logic; 
+      
+      stall : out std_logic 
+   );
 end component;
 
 signal instruction_out_1_temp : std_logic_vector (31 downto 0);
@@ -138,13 +155,47 @@ signal branch_temp : std_logic;
 signal mem_read_temp : std_logic;
 signal mem_write_temp : std_logic;
 signal alu_src_temp : std_logic;
-signal reg_write_temp : std_logic; 
+signal reg_write_temp : std_logic;
+
+signal register_target_out_2_temp, register_destination_out_2_temp : std_logic_vector(4 downto 0);
+signal mem_to_reg_out_2_temp, mem_to_reg_out_3_temp, alu_src_out_2_temp, reg_write_out_2_temp: std_logic;
+signal reg_write_back_3_temp : std_logic_vector(4 downto 0);
 
 signal stall_temp : std_logic;
 
 begin
 
    stall <= stall_temp;
+
+   register_target_out_2 <= register_target_out_2_temp;
+   register_destination_out_2 <= register_destination_out_2_temp;
+   mem_to_reg_out_2 <= mem_to_reg_out_2_temp;
+   mem_to_reg_out_3 <= mem_to_reg_out_3_temp;
+   alu_src_out_2 <= alu_src_out_2_temp;
+   reg_write_out_2 <= reg_write_out_2_temp;
+   reg_write_back_3 <= reg_write_back_3_temp;
+
+
+hazard_detection : hazard_detection_unit port map(
+   reg_target_ID_EX => register_target_out_2_temp,
+   reg_destination_ID_EX => register_destination_out_2_temp,
+   reg_source_IF_ID => instruction_out_1_temp(25 downto 21),
+   reg_target_IF_ID => instruction_out_1_temp(20 downto 16), 
+   reg_write_back_EX_MEM => reg_write_back_3_temp,
+      
+   mem_to_reg_ID_EX => mem_to_reg_out_2_temp, 
+   mem_to_reg_EX_MEM => mem_to_reg_out_3_temp,  
+      
+   branch  => branch_temp,
+      
+   alu_src_ID => alu_src_temp,
+   alu_src_ID_EX => alu_src_out_2_temp,
+      
+   reg_write_ID => reg_write_temp,
+   reg_write_ID_EX => reg_write_out_2_temp,
+      
+   stall  => stall_temp
+);
 
 
 d_path : Data_Path port map (
@@ -162,27 +213,27 @@ d_path : Data_Path port map (
 	pc_plus4_out_1=>pc_plus4_out_1,
 	extended_sign_out_2=>extended_sign_out_2, 
    function_op_out_2=>function_op_out_2, 
-   register_target_out_2=>register_target_out_2, 
-	register_destination_out_2=>register_destination_out_2, 
+   register_target_out_2=>register_target_out_2_temp, 
+	register_destination_out_2=>register_destination_out_2_temp, 
    reg_dst_out_2=>reg_dst_out_2,
 	jump_out_2=>jump_out_2, 
 	branch_out_2=>branch_out_2, 
 	mem_read_out_2=>mem_read_out_2, 
-	mem_to_reg_out_2=>mem_to_reg_out_2, 
+	mem_to_reg_out_2=>mem_to_reg_out_2_temp, 
 	mem_write_out_2=>mem_write_out_2, 
-	alu_src_out_2=>alu_src_out_2, 
-	reg_write_out_2=>reg_write_out_2, 
+	alu_src_out_2=>alu_src_out_2_temp, 
+	reg_write_out_2=>reg_write_out_2_temp, 
    alu_op_out_2=>alu_op_out_2,
    pc_plus4_out_2=>pc_plus4_out_2,
    read_data1_out_2=>read_data1_out_2,
    read_data2_out_2=>read_data2_out_2 ,
-	reg_write_back_3=>reg_write_back_3,
+	reg_write_back_3=>reg_write_back_3_temp,
    read_data_2_out_3=>read_data_2_out_3,
    alu_result_out_3=>alu_result_out_3,
    pc_from_branch_3=>pc_from_branch_3,
    pc_src_selector_3=>pc_src_selector_3, 
    mem_read_out_3=>mem_read_out_3,
-   mem_to_reg_out_3=>mem_to_reg_out_3,
+   mem_to_reg_out_3=>mem_to_reg_out_3_temp,
    reg_write_out_3=>reg_write_out_3,
    mem_write_out_3=>mem_write_out_3,  
    reg_write_out_4=>reg_write_out_4,
