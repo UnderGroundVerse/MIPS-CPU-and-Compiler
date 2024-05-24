@@ -44,7 +44,7 @@ architecture Behavioral of Instruction_Memory_VHDL is
 		  "00000000",--|		  |
         "00001111",--|		  |
         "10001100",--|lw M0(into specifed temp reg temp7 $15)
-        "00011000",--|		  |----------------------------mul M0(temp7) and R1
+        "00011000",--|		  |----------------------------mul M0(temp7) and R1 and save it in R1
         "01001000",--|		  |
 		  "00101111",--|		  |
 		  "00000001",--|mul----|
