@@ -43,7 +43,7 @@ port
 	
 	alu_src_ID, alu_src_ID_EX : in std_logic;
 	
-	reg_write_back_ID,reg_write_back_ID_EX : in std_logic; 
+	reg_write_ID,reg_write_ID_EX : in std_logic; 
 	
 	stall : out std_logic 
 );
@@ -52,14 +52,14 @@ end hazard_detection_unit;
 architecture Behavioral of hazard_detection_unit is
 begin
 	process(branch, mem_to_reg_EX_MEM, mem_to_reg_ID_EX
-	, reg_destination_ID_EX, reg_write_back_ID_EX , reg_write_back_ID
+	, reg_destination_ID_EX, reg_write_ID_EX , reg_write_ID
 	, reg_write_back_EX_MEM, reg_source_IF_ID
 	, reg_target_ID_EX, reg_target_IF_ID
 	, alu_src_ID, alu_src_ID_EX)
 	begin
 		stall <= '0';
 		
-		if(branch = '1' and reg_write_back_ID_EX = '1') then 
+		if(branch = '1' and reg_write_ID_EX = '1') then 
 			if(alu_src_ID_EX = '1') then
 				if((unsigned(reg_source_IF_ID) = unsigned(reg_target_ID_EX)) or (unsigned(reg_target_IF_ID) = unsigned(reg_target_ID_EX))) then
 					stall <= '1';
@@ -81,7 +81,7 @@ begin
 		end if;
 		
 		
-		if(mem_to_reg_ID_EX = '1' and reg_write_back_ID = '1') then
+		if(mem_to_reg_ID_EX = '1' and reg_write_ID = '1') then
 			
 			if((unsigned(reg_target_ID_EX) = unsigned(reg_source_IF_ID) or unsigned(reg_target_ID_EX) = unsigned(reg_target_IF_ID)) and alu_src_ID = '0') then
 				stall <= '1';
