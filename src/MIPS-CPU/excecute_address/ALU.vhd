@@ -64,7 +64,7 @@ begin
 	-- result <= 	(operand1 + operand2) when "0010",
 	-- 			"0000" when others;
 
-process(alu_control_in, operand1, operand2)
+process(alu_control_in,operand1,operand2,alu_src)
 
 begin
 -- if (rising_edge(clk)) 
