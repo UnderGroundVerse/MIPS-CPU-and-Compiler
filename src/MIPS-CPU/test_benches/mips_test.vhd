@@ -39,7 +39,8 @@ architecture bench of Mips_tb is
           alu_result_out_4  : out std_logic_vector (31 downto 0);
           reg_write_back_out_4 : out std_logic_vector (4 downto 0);
           read_data_4 :  out std_logic_vector (31 downto 0);
-          write_data_out_5 : out std_logic_vector(31 downto 0)
+          write_data_out_5 : out std_logic_vector(31 downto 0);
+          stall : out std_logic
   );
   end component;
 
@@ -67,6 +68,7 @@ architecture bench of Mips_tb is
   signal reg_write_back_out_4: std_logic_vector (4 downto 0);
   signal read_data_4: std_logic_vector (31 downto 0);
   signal write_data_out_5: std_logic_vector(31 downto 0) ;
+  signal stall : std_logic;
 
 begin
 
@@ -103,7 +105,8 @@ begin
                        alu_result_out_4           => alu_result_out_4,
                        reg_write_back_out_4       => reg_write_back_out_4,
                        read_data_4                => read_data_4,
-                       write_data_out_5           => write_data_out_5 );
+                       write_data_out_5           => write_data_out_5,
+                       stall => stall );
 
 clk_process :process
 begin

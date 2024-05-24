@@ -22,9 +22,12 @@ architecture Behavioral of IF_ID is
 begin
     process(clk)
     begin
-        if(rising_edge(clk) and stall = '0') then
+        if(rising_edge(clk)) then
+            if(stall = '0') then
             instruction_out <= instruction_in;
             pc_plus4_out <= pc_plus4_in;
+            end if;
+            
         end if;
     end process;
 end Behavioral;

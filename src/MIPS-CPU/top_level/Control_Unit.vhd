@@ -40,7 +40,9 @@ port (
 	
 	alu_op: out std_logic_vector(1 downto 0);
   mem_to_reg,reg_dst,jump,branch,mem_read,mem_write,alu_src,reg_write: out std_logic;
-  clk : in std_logic
+  clk : in std_logic;
+
+  stall : in std_logic
  );
 
 end Control_Unit;
@@ -48,11 +50,23 @@ end Control_Unit;
 architecture Behavioral of Control_Unit is
 
 begin
-process(clk)
+process(opcode)
 begin
 
- if(falling_edge(clk))
- then
+   reg_dst <= '1';
+   mem_to_reg <= '0';
+   alu_op <= "XX";
+   jump <= '0';
+   branch <= '0';
+   mem_read <= '0';
+   mem_write <= '0';
+   alu_src <= '0';
+   reg_write <= '1';
+
+
+-- if(stall = '0') then
+--  if(falling_edge(clk))
+--  then
  case opcode is
   when "000000" => --(R type)
     reg_dst <= '1'; --taking destintion reg as r type
@@ -162,19 +176,29 @@ begin
   
    
  
- when others =>   
-    reg_dst <= '0';
-    mem_to_reg <= '0';
-    alu_op <= "00";
-    jump <= '0';
-    branch <= '0';
-    mem_read <= '0';
-    mem_write <= '0';
-    alu_src <= '0';
-    reg_write <= '0';
+ when others =>   null;
+   --  reg_dst <= '0';
+   --  mem_to_reg <= '0';
+   --  alu_op <= "00";
+   --  jump <= '0';
+   --  branch <= '0';
+   --  mem_read <= '0';
+   --  mem_write <= '0';
+   --  alu_src <= '0';
+   --  reg_write <= '0';
+   -- reg_dst <= '1';
+   -- mem_to_reg <= '0';
+   -- alu_op <= "XX";
+   -- jump <= '0';
+   -- branch <= '0';
+   -- mem_read <= '0';
+   -- mem_write <= '0';
+   -- alu_src <= '0';
+   -- reg_write <= '1';
    
  end case;
- end if;
+--  end if;
+--  end if;
 end process;
 
 

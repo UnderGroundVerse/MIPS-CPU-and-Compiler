@@ -83,7 +83,9 @@ component Control_Unit is
 	alu_op: out std_logic_vector(1 downto 0);
    mem_to_reg
 	,reg_dst,jump,branch,mem_read,mem_write,alu_src,reg_write: out std_logic;
-   clk : in std_logic
+   clk : in std_logic;
+
+   stall : std_logic
  );
 
 end component;
@@ -125,7 +127,7 @@ component Data_Path is
 
         write_data_out_5 : out std_logic_vector(31 downto 0);
 
-        stall : out std_logic
+        stall : in std_logic
     );
 end component;
 
@@ -258,7 +260,8 @@ c_unit : Control_Unit port map (
 	mem_read=>mem_read_temp,
 	mem_write=>mem_write_temp,
 	alu_src=>alu_src_temp,
-	reg_write=>reg_write_temp
+	reg_write=>reg_write_temp,
+   stall => stall_temp
  );
 
 instruction_out_1<=instruction_out_1_temp;
