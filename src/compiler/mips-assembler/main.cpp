@@ -27,9 +27,11 @@ int main(){
     
     file.close();
     a.interpret();
-    for(int i=0;i<a.instruction.size();i++){
-        std::cout<< a.instruction[i] << std::endl;
-    }
+   
+        std::cout<< a.instruction[0] << std::endl;
+        std::cout<< a.instruction[1] << std::endl;
+    
+  
     //modify instructions to match with the VHDL modules
     //ofstream machine code into a text file
     

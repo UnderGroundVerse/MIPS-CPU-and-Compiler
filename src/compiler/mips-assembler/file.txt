@@ -1,4 +1,3 @@
 .text
-move $t0,$t1,$v0
-inp $t1,$t3,$t5
+inp $t0,9
 

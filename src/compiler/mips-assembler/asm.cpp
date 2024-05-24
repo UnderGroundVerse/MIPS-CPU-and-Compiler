@@ -3,6 +3,8 @@
 #include<map>
 #include "asm.h"
 #include<string>
+#include<bitset>
+#include<iostream>
 
 std::map <std::string,std::string> instructionMap={
     {"inp","000000"},
@@ -14,8 +16,18 @@ std::map <std::string,std::string> instructionMap={
     {"move","000110"}
 };
 
+std::map <std::string,std::string> mipsInstructionMap = {
+    {"addi","001000"},
+    {"move" ,"000000"},
+    {"sw","101011"},
+    {"lw","100011"},
+    {"mul","000000"}
+
+
+};
+
 std::map <std::string,std::string> regAddressMap={
-    {"0","00000"},
+    {"zero","00000"},
     {"at","00001"},
     {"v0","00010"},
     {"v1","00011"},
@@ -66,8 +78,10 @@ Asm::Asm(){
 
 
 void Asm::interpretInstruction(){
-    opcode= instructionMap[op];
+    opcode= mipsInstructionMap[op];
 };
+
+
 
 
 
@@ -80,6 +94,8 @@ void Asm::interpret(){
     int registerCounter=0;
     int j;
     int k;
+    std::string immediate_binary;
+    std::string immediate;
     for(int i=0;i<programStack.size();i++){//modify warning
         if(!instInterpreted){
             for( j=0;j<programStack[i].length();j++){
@@ -91,7 +107,7 @@ void Asm::interpret(){
                         op.push_back(programStack[i][j]);
                         j++; 
                 }
-                    interpretInstruction();
+                    //interpretInstruction();
                     if(programStack[i][j]==' '){
                         instInterpreted=true;
                         break;
@@ -103,7 +119,7 @@ void Asm::interpret(){
 
         if(instInterpreted){
             //in case of r-type
-            for(k=j;k<programStack[i].length();k++){
+            /*for(k=j;k<programStack[i].length();k++){
                 
                 if(programStack[i][k]=='$' && registerCounter==0 ){
                     rs.push_back(programStack[i][k+1]);
@@ -137,10 +153,87 @@ void Asm::interpret(){
             k=0;
             rs_address = regAddressMap[rs];
             rt_address = regAddressMap[rt];
-            rd_address = regAddressMap[rd];
+            rd_address = regAddressMap[rd];*/
 
         }
-        cctInstruction("00000","000000");
+        if(op=="inp"){
+            
+            for(k=j;k<programStack[i].length();k++){
+                if(programStack[i][k]=='$' && registerCounter==0 ){
+                    rd.push_back(programStack[i][k+1]);
+                    rd.push_back(programStack[i][k+2]);
+                    k+=2;
+                            
+                }
+                else if(programStack[i][k]==','){
+                    registerCounter++;
+                }
+                else if((programStack[i][k] >= '0') && (programStack[i][k] <= '9') &&( registerCounter==1)){
+                    immediate.push_back(programStack[i][k]);
+                }
+                else{
+                    //error
+                }
+            }
+            rd_address = regAddressMap[rd];
+            immediate_binary = std::bitset<16>(std::stoi(immediate)).to_string();
+            instruction.push_back(mipsInstructionMap["addi"]+regAddressMap["zero"]+regAddressMap["v0"]+immediate_binary);
+            instruction.push_back(mipsInstructionMap["move"]+regAddressMap["zero"]+regAddressMap["v0"]+rd_address+"00000" + "100000");
+            registerCounter=0;
+
+
+        }
+        else if(op=="mov"){
+            for(k=j;k<programStack[i].length();k++){
+                if(programStack[i][k]=='$' && registerCounter==0 ){
+                    rs.push_back(programStack[i][k+1]);
+                    rs.push_back(programStack[i][k+2]);
+                    k+=2;
+                            
+                }
+                else if(programStack[i][k]=='$' && registerCounter==1 ){
+                    rt.push_back(programStack[i][k+1]);
+                    rt.push_back(programStack[i][k+2]);
+                    k+=2;
+                            
+                }
+                else if(programStack[i][k]==','){
+                    registerCounter++;
+                }
+                
+            }
+            rs_address= regAddressMap[rs];
+            rt_address= regAddressMap[rt];
+            immediate_binary="0000000000000000";
+            instruction.push_back(mipsInstructionMap["sw"]+rs_address+rt_address+immediate_binary);
+            registerCounter=0;
+        }
+        else if(op=="mul"){
+            for(k=j;k<programStack[i].length();k++){
+                if(programStack[i][k]=='$' && registerCounter==0){
+                    rs.push_back(programStack[i][k+1]);
+                    rs.push_back(programStack[i][k+2]);
+                    k+=2;
+                }
+                else if(programStack[i][k]==','){
+                    registerCounter++;
+                }
+                else if(programStack[i][k]=='$' && registerCounter==1){
+                    rd.push_back(programStack[i][k+1]);
+                    rd.push_back(programStack[i][k+2]);
+                    k+=2;
+                }
+            }
+            rs_address= regAddressMap[rs];
+            rd_address = regAddressMap[rd];
+            immediate_binary= "0000000000000000";
+            instruction.push_back(mipsInstructionMap["lw"]+ rs_address + regAddressMap["t7"]+immediate_binary);
+            instruction.push_back(mipsInstructionMap["mul"]+rd_address+ regAddressMap["t7"]+ rd_address + "00000"+"011000" );
+
+        }
+
+
+
         rd="";
         rs="";
         rt="";
