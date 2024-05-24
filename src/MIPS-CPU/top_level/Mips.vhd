@@ -61,7 +61,9 @@ port  (
         reg_write_back_out_4 : out std_logic_vector (4 downto 0);
         read_data_4 :  out std_logic_vector (31 downto 0);
 
-        write_data_out_5 : out std_logic_vector(31 downto 0)
+        write_data_out_5 : out std_logic_vector(31 downto 0);
+
+        stall : out std_logic
 	
 );
 
@@ -121,7 +123,9 @@ component Data_Path is
         reg_write_back_out_4 : out std_logic_vector (4 downto 0);
         read_data_4 :  out std_logic_vector (31 downto 0);
 
-        write_data_out_5 : out std_logic_vector(31 downto 0)
+        write_data_out_5 : out std_logic_vector(31 downto 0);
+
+        stall : in std_logic
     );
 end component;
 
@@ -136,7 +140,11 @@ signal mem_write_temp : std_logic;
 signal alu_src_temp : std_logic;
 signal reg_write_temp : std_logic; 
 
+signal stall_temp : std_logic;
+
 begin
+
+   stall <= stall_temp;
 
 
 d_path : Data_Path port map (
@@ -182,9 +190,9 @@ d_path : Data_Path port map (
    alu_result_out_4=>alu_result_out_4, 
    reg_write_back_out_4=>reg_write_back_out_4, 
    read_data_4=>read_data_4, 
-   write_data_out_5=>write_data_out_5
+   write_data_out_5=>write_data_out_5,
 	
-	
+	stall => stall_temp
 );
 
 

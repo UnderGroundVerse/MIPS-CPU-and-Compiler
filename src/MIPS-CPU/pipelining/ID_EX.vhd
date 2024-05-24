@@ -20,7 +20,9 @@ Entity ID_EX is
         read_data1_out, read_data2_out : out std_logic_vector(31 downto 0);
         extended_sign_out : out std_logic_vector(31 downto 0);
         register_target_out, register_destination_out : out std_logic_vector(4 downto 0);
-        function_op_out : out std_logic_vector(5 downto 0)
+        function_op_out : out std_logic_vector(5 downto 0);
+
+        stall : in std_logic
     );
 end ID_EX;
 
@@ -50,6 +52,13 @@ begin
             register_target_out <= register_target;
             register_destination_out <= register_destination;
             function_op_out <= function_op;
+
+            if (stall = '1') then
+                alu_op_out <= (others => '0');
+                mem_write_out <= '0';
+                mem_read_out <= '0'; --check
+                reg_write_out <= '0';
+            end if;
         end if;
     end process;
 end Behavioral;

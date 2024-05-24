@@ -11,7 +11,9 @@ entity Fetch_Pipeline is
 		pc_src_selector : in std_logic;
 	    pc_from_branch  : in std_logic_vector(31 downto 0);
 		instruction_out : out std_logic_vector(31 downto 0);
-        pc_plus4_out : out std_logic_vector(31 downto 0)
+        pc_plus4_out : out std_logic_vector(31 downto 0);
+
+        stall : in std_logic
     );
 end Fetch_Pipeline;
 
@@ -27,7 +29,9 @@ architecture Behavioral of Fetch_Pipeline is
             pc_src_selector : in std_logic;
             pc_from_branch  : in std_logic_vector(31 downto 0);
             pc_out          : out std_logic_vector(31 downto 0);
-            instruction_out : out std_logic_vector(31 downto 0)
+            instruction_out : out std_logic_vector(31 downto 0);
+
+            stall : in std_logic
         );
     end component;
     component IF_ID is
@@ -36,7 +40,9 @@ architecture Behavioral of Fetch_Pipeline is
             pc_plus4_in : in std_logic_vector(31 downto 0);
             clk : in std_logic;
             instruction_out : out std_logic_vector(31 downto 0);
-            pc_plus4_out : out std_logic_vector(31 downto 0)
+            pc_plus4_out : out std_logic_vector(31 downto 0);
+
+            stall : in std_logic
         );
     end component;
 
@@ -51,7 +57,9 @@ begin
         pc_src_selector => pc_src_selector,
         pc_from_branch => pc_from_branch,
         pc_out => pc_out_temp,
-        instruction_out => instruction_out_temp
+        instruction_out => instruction_out_temp,
+
+        stall => stall
     );
 
     temp : IF_ID
@@ -60,7 +68,9 @@ begin
         instruction_in => instruction_out_temp,
         pc_plus4_in => pc_out_temp,
         instruction_out => instruction_out,
-        pc_plus4_out => pc_plus4_out
+        pc_plus4_out => pc_plus4_out,
+
+        stall => stall
     );
 
 end Behavioral;

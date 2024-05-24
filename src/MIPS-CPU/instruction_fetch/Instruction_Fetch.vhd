@@ -14,7 +14,9 @@ entity Instruction_Fetch is
 		pc_src_selector : in std_logic;
 	    pc_from_branch  : in std_logic_vector(31 downto 0);
 		pc_out          : out std_logic_vector(31 downto 0);
-        instruction_out : out std_logic_vector(31 downto 0)
+        instruction_out : out std_logic_vector(31 downto 0);
+
+        stall : in std_logic
     );
 end Instruction_Fetch;
 
@@ -54,7 +56,9 @@ architecture Behavioral of Instruction_Fetch is
         port(
             clk : in std_logic;
             pc_in : in std_logic_vector(31 downto 0);
-            pc_out : out std_logic_vector(31 downto 0)
+            pc_out : out std_logic_vector(31 downto 0);
+
+            stall : in std_logic
         );
     end component;
 	 
@@ -90,7 +94,9 @@ begin
     p_c : Program_Counter port map(
         clk => clk,
         pc_in => pc_in,
-        pc_out => pc_temp
+        pc_out => pc_temp,
+        
+        stall => stall
     );
 
     adder : Pc_Adder generic map(n => 32)

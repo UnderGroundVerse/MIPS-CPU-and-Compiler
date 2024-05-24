@@ -19,7 +19,9 @@ entity Decode_Pipeline is
         reg_dst_out, jump_out, branch_out, mem_read_out, mem_to_reg_out, mem_write_out, alu_src_out, reg_write_out : out std_logic;
         alu_op_out : out std_logic_vector(1 downto 0);
         pc_plus4_out : out std_logic_vector(31 downto 0);
-        read_data1_out, read_data2_out : out std_logic_vector(31 downto 0)
+        read_data1_out, read_data2_out : out std_logic_vector(31 downto 0);
+
+        stall : in std_logic
     );
 end Decode_Pipeline;
 
@@ -53,7 +55,9 @@ architecture Behavioral of Decode_Pipeline is
             read_data1_out, read_data2_out : out std_logic_vector(31 downto 0);
             extended_sign_out : out std_logic_vector(31 downto 0);
             register_target_out, register_destination_out : out std_logic_vector(4 downto 0);
-            function_op_out : out std_logic_vector(5 downto 0)
+            function_op_out : out std_logic_vector(5 downto 0);
+
+            stall : in std_logic
         );
     end component;
 
@@ -111,6 +115,8 @@ begin
         extended_sign_out => extended_sign_out,
         register_target_out => register_target_out,
         register_destination_out => register_destination_out,
-        function_op_out => function_op_out
+        function_op_out => function_op_out,
+
+        stall => stall
     );
 end Behavioral;

@@ -9,7 +9,8 @@ entity Program_Counter is
     port(
         clk : in std_logic;
         pc_in : in std_logic_vector(31 downto 0);
-        pc_out : out std_logic_vector(31 downto 0)
+        pc_out : out std_logic_vector(31 downto 0);
+        stall : in std_logic
     );
 end Program_Counter;
 
@@ -18,9 +19,9 @@ end Program_Counter;
 architecture Behavioral of Program_Counter is
     signal pc_temp : std_logic_vector(31 downto 0) := X"00000000";
 begin
-    process(clk)
+    process(clk, stall)
     begin
-        if(rising_edge(clk)) then
+        if(rising_edge(clk) and stall = '0') then
             pc_temp <= pc_in;
         end if;
     end process;

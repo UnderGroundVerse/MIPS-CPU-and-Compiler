@@ -36,7 +36,9 @@ entity Data_Path is
         reg_write_back_out_4 : out std_logic_vector (4 downto 0);
         read_data_4 :  out std_logic_vector (31 downto 0);
 
-        write_data_out_5 : out std_logic_vector(31 downto 0)
+        write_data_out_5 : out std_logic_vector(31 downto 0);
+
+        stall : in std_logic
     );
 end Data_Path;
 
@@ -48,7 +50,9 @@ architecture Behavioral of Data_Path is
             pc_src_selector : in std_logic;
             pc_from_branch  : in std_logic_vector(31 downto 0);
             instruction_out : out std_logic_vector(31 downto 0);
-            pc_plus4_out : out std_logic_vector(31 downto 0)
+            pc_plus4_out : out std_logic_vector(31 downto 0);
+
+            stall : in std_logic
         );
     end component;
 
@@ -68,7 +72,9 @@ architecture Behavioral of Data_Path is
             reg_dst_out, jump_out, branch_out, mem_read_out, mem_to_reg_out, mem_write_out, alu_src_out, reg_write_out : out std_logic;
             alu_op_out : out std_logic_vector(1 downto 0);
             pc_plus4_out : out std_logic_vector(31 downto 0);
-            read_data1_out, read_data2_out : out std_logic_vector(31 downto 0)
+            read_data1_out, read_data2_out : out std_logic_vector(31 downto 0);
+
+            stall : std_logic
         );
     end component;
 
@@ -200,7 +206,9 @@ begin
         pc_src_selector => pc_src_selector_temp3,
         pc_from_branch => pc_from_branch_temp3,
         instruction_out => instruction_out_temp1,
-        pc_plus4_out => pc_plus4_out_temp1
+        pc_plus4_out => pc_plus4_out_temp1,
+
+        stall => stall
     );
 
     decode_pipe : Decode_Pipeline port map(
@@ -235,7 +243,9 @@ begin
         alu_op_out => alu_op_out_temp2,
         pc_plus4_out => pc_plus4_out_temp2,
         read_data1_out => read_data1_out_temp2,
-        read_data2_out => read_data2_out_temp2
+        read_data2_out => read_data2_out_temp2,
+
+        stall => stall
     );
 
     excecute_pipe : MEM_EXE_PIPE port map(
