@@ -67,7 +67,7 @@ architecture Behavioral of AlUComponent is
 	signal lo : std_logic_vector (n-1 downto 0); 
 begin
 
-process(alu_op,function_op)
+process(alu_op,function_op,operand1,alu_src,operand2)
 begin
 	if(alu_op = "10") --(R Type)
 		then 

@@ -13,7 +13,7 @@ entity Instruction_Memory_VHDL is
 end Instruction_Memory_VHDL;
 
 architecture Behavioral of Instruction_Memory_VHDL is
-    type ROM_type is array (0 to 59) of std_logic_vector(7 downto 0);
+    type ROM_type is array (0 to 63) of std_logic_vector(7 downto 0);
 
     constant rom_data: ROM_type := (
         "00001001",--|-----------|    
@@ -22,7 +22,7 @@ architecture Behavioral of Instruction_Memory_VHDL is
         "00100000",--|li 			|--inp R0 inp value =9
         "00100000",--|    			|
         "01000000",--|  			|
-        "00000010",--|				|
+        "00000010",--|			|
         "00000000",--|moveRtoR---|  		
         "00000000",--|----|
         "00000000",--|----|
@@ -72,10 +72,14 @@ architecture Behavioral of Instruction_Memory_VHDL is
 		  "00000000",--|		           |
         "00000000",--|		           |---------bun to End skipping 1 instruction
         "00010100",--|bun-------------|
-		  "00100000",--|    			|
+        "00100000",--|    			|
         "00100000",--|  			|
         "00100000",--|				|--------move R1 to a0 $4
-		  "00000001" --|moveRtoR---|		
+		"00000001",--|moveRtoR---|
+        "11111111",--|----------------|
+		"11111111",--|		           |
+        "00000000",--|		           |---------bun to End skipping 0 instruction
+        "00010100"--|bun-------------|	
     );
 begin
 

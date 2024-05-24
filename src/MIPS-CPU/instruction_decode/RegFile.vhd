@@ -52,7 +52,7 @@ signal read_data2_temp : std_logic_vector(31 downto 0);
 
 begin
 
-process(read_reg1, read_reg2, regWrite, write_reg, write_data) --(clk)
+process(regWrite,write_data,read_reg1,read_reg2,write_reg) --(clk)
 begin	
 	--if(rising_edge(clk))
 		--then
@@ -67,8 +67,10 @@ begin
 		read_data2_temp<= reg_array(to_integer(unsigned(read_reg2)));		
 	end if;	
 --end if;	
+
+
 end process;
-read_data1 <= X"00000000" when read_reg1 = "00000" else read_data1_temp;
-read_data2 <= X"00000000" when read_reg2 = "00000" else read_data2_temp;
+	read_data1 <= X"00000000" when read_reg1 = "00000" else read_data1_temp;
+	read_data2 <= X"00000000" when read_reg2 = "00000" else read_data2_temp;
 end Behavioral;
 
