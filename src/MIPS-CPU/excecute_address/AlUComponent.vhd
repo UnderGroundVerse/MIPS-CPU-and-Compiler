@@ -60,7 +60,6 @@ architecture Behavioral of AlUComponent is
 
 	signal alu_code : std_logic_vector (3 downto 0) ;
 	signal alu_zero_temp : std_logic;
-	signal alu_code_temp : std_logic_vector (3 downto 0);
 	signal result : std_logic_vector (31 downto 0) ;
 	signal mul : std_logic_vector (63 downto 0);
 	signal div : std_logic_vector (63 downto 0);
@@ -105,12 +104,12 @@ begin
 		end case;	
 	end if;
 
-alu_code_temp<=alu_code;
+
 
 
 
 		alu_zero_temp<='0';
-		case alu_code_temp is
+		case alu_code is
 			when "0010" => 
 				result<= operand1 + operand2;
 			when "0110" => 
@@ -132,10 +131,10 @@ alu_code_temp<=alu_code;
 			when others => null;
 				
 			end case;
-			if((alu_code_temp="0110") and (result = (X"00000000"))) then --beq
+			if((alu_code="0110") and (result = (X"00000000"))) then --beq
 				alu_zero_temp<='1';
 			end if;
-			if((alu_code_temp="0011") and (operand1(31) = '0')) then --skip
+			if((alu_code="0011") and (operand1(31) = '0')) then --skip
 				alu_zero_temp<='1';
 			end if;
 				
