@@ -11,8 +11,8 @@ std::map <std::string,std::string> instructionMap={
     {"mov","000001"},
     {"mul","000010"},
     {"skp","000011"},
-    {"bun","000100"},
-    {"out","000101"},
+    {"bun","000101"},
+    {"out","000000"},
     {"move","000110"}
 };
 
@@ -21,7 +21,8 @@ std::map <std::string,std::string> mipsInstructionMap = {
     {"move" ,"000000"},
     {"sw","101011"},
     {"lw","100011"},
-    {"mul","000000"}
+    {"mul","000000"},
+    {"skip","100001"}
 
 
 };
@@ -223,12 +224,55 @@ void Asm::interpret(){
                     rd.push_back(programStack[i][k+2]);
                     k+=2;
                 }
+
             }
+
             rs_address= regAddressMap[rs];
             rd_address = regAddressMap[rd];
             immediate_binary= "0000000000000000";
             instruction.push_back(mipsInstructionMap["lw"]+ rs_address + regAddressMap["t7"]+immediate_binary);
             instruction.push_back(mipsInstructionMap["mul"]+rd_address+ regAddressMap["t7"]+ rd_address + "00000"+"011000" );
+
+        }
+        else if(op=="skp"){
+            for(k=j;k<programStack[i].length();k++){
+                if(programStack[i][k]=='$' && registerCounter==0){
+                    rs.push_back(programStack[i][k+1]);
+                    rs.push_back(programStack[i][k+2]);
+                    k+=2;
+                }
+            }
+            rs_address=regAddressMap[rs];
+
+            immediate_binary="0000000000000000";
+            instruction.push_back(mipsInstructionMap["lw"]+rs_address+regAddressMap["t7"]+immediate_binary);
+            immediate_binary="0000000000000001";
+            instruction.push_back(mipsInstructionMap["skip"]+regAddressMap["t7"]+regAddressMap["zero"]+immediate_binary);
+
+        }
+        else if(op=="bun"){
+            for(k=j;k<programStack[i].length();k++){
+                if((programStack[i][k] >= '0') && (programStack[i][k] <= '9') &&( registerCounter==0)){
+                    immediate.push_back(programStack[i][k]);
+                }
+
+            }
+            rs_address="00000";
+            rd_address="00000";
+            immediate_binary = std::bitset<16>(std::stoi(immediate)).to_string();
+            instruction.push_back(instructionMap["bun"]+rs_address+rd_address+immediate_binary);
+        }
+        else if(op=="out"){
+            for(k=j;k<programStack[i].length();k++){
+                if(programStack[i][k]=='$' && registerCounter==0){
+                    rt.push_back(programStack[i][k+1]);
+                    rt.push_back(programStack[i][k+2]);
+                    k+=2;
+                }
+            }
+            rs_address="00000";
+            rt_address = regAddressMap[rt];
+            instruction.push_back(instructionMap["out"] + rs_address + rt_address + regAddressMap["a0"]+"00000"+"100000" );
 
         }
 

@@ -1,3 +1,6 @@
 .text
+bun 5
 inp $t0,9
-
+skp $s3
+mov $t1,$s3
+out $t7
