@@ -104,10 +104,6 @@ begin
 		end case;	
 	end if;
 
-
-
-
-
 		alu_zero_temp<='0';
 		case alu_code is
 			when "0010" => 
@@ -138,7 +134,7 @@ begin
 				alu_zero_temp<='1';
 			end if;
 				
-	
+		
 end process;
 
 

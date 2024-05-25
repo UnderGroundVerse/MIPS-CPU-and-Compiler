@@ -69,16 +69,16 @@ begin
 	 
 
 	 
-	 when "001100" => --inp (I type)
-    reg_dst <= '0'; --taking destintion reg as i type
-    mem_to_reg <= '0';
-    alu_op <= "11";
-    jump <= '0';
-    branch <= '0';
-    mem_read <= '0';
-    mem_write <= '0';
-    alu_src <= '1';
-    reg_write <= '1';
+	--  when "001100" => --inp (I type)
+   --  reg_dst <= '0'; --taking destintion reg as i type
+   --  mem_to_reg <= '0';
+   --  alu_op <= "11";
+   --  jump <= '0';
+   --  branch <= '0';
+   --  mem_read <= '0';
+   --  mem_write <= '0';
+   --  alu_src <= '1';
+   --  reg_write <= '1';
 	 
 	 when "001000" => --addi (I type)
     reg_dst <= '0'; --taking destintion reg as i type
