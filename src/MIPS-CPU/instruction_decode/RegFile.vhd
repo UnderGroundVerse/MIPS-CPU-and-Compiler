@@ -46,7 +46,7 @@ end RegFile;
 
 architecture Behavioral of RegFile is
 type reg_type is array (31 downto 0)  of std_logic_vector (31 downto 0);
-signal reg_array :reg_type; --:= (others => X"00000000")
+signal reg_array :reg_type := (others => X"00000000");
 signal read_data1_temp : std_logic_vector(31 downto 0);
 signal read_data2_temp : std_logic_vector(31 downto 0);
 
