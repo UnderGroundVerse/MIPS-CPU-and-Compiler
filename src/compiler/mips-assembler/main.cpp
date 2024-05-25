@@ -27,13 +27,14 @@ int main(){
     
     file.close();
     a.interpret();
-   
-        std::cout<< a.instruction[0] << std::endl;
-        std::cout<< a.instruction[1] << std::endl;
-    
+    std::ofstream ofs ("machine-code.txt", std::ofstream::out);
+    for(int i=0;i<a.instruction.size();i++){
+        ofs <<  a.instruction[i] << std::endl;
+    }
+        
+        
   
-    //modify instructions to match with the VHDL modules
-    //ofstream machine code into a text file
+
     
 
 

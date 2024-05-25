@@ -8,27 +8,21 @@
 class Asm{
     private:
         int linePosition;
-
-
         std::string op;
         std::string opcode;
-
         bool instInterpreted;
-
         std::vector<std::string> programStack;
+        std::string rd_address;  
+        std::string rd;
 
-       std::string rd_address;  
-       std::string rd;
-
-       std::string rs_address;
-       std::string rs;
+        std::string rs_address;
+        std::string rs;
 
 
-       std::string rt; 
-       std::string rt_address;
-       void interpretRegister();
-       void interpretInstruction();
-       void cctInstruction(std::string shamt,std::string func);
+        std::string rt; 
+        std::string rt_address;
+        void interpretInstruction();
+        void cctInstruction(std::string shamt,std::string func);
 
 
     public:
